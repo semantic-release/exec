@@ -4,7 +4,7 @@
   "version": "0.0.0-development",
   "author": "Pierre Vanduynslager (https://github.com/pvdlg)",
   "bugs": {
-    "url": "https://github.com/semantic-release/git/issues"
+    "url": "https://github.com/semantic-release/exec/issues"
   },
   "config": {
     "commitizen": {
@@ -42,7 +42,7 @@
     "lib",
     "index.js"
   ],
-  "homepage": "https://github.com/semantic-release/git#readme",
+  "homepage": "https://github.com/semantic-release/exec#readme",
   "keywords": [
     "cli",
     "publish",
@@ -77,7 +77,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/semantic-release/git.git"
+    "url": "https://github.com/semantic-release/exec.git"
   },
   "scripts": {
     "cm": "git-cz",
