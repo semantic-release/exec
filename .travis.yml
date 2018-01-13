@@ -1,6 +1,5 @@
 language: node_js
-notifications:
-  email: false
+
 node_js:
   - 9
   - 8
@@ -21,4 +20,10 @@ script:
 
 after_success:
   - npm run codecov
-  - npm run semantic-release
+
+jobs:
+  include:
+    - stage: release
+      node_js: lts/*
+      script:
+        - npm run semantic-release
