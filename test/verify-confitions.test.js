@@ -59,7 +59,7 @@ test.serial('Throw "SemanticReleaseError" if another script plugin "cmd" options
     logger: t.context.logger,
     options: {
       branch: 'master',
-      getLastRelease: ['@semantic-release/npm', {path: '@semantic-release/script', cmd: '  '}],
+      publish: ['@semantic-release/npm', {path: '@semantic-release/script', cmd: '  '}],
     },
   };
 
