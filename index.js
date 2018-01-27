@@ -1,10 +1,9 @@
 const {castArray, isPlainObject} = require('lodash');
-const parseJson = require('parse-json');
 const SemanticReleaseError = require('@semantic-release/error');
 const execScript = require('./lib/exec-script');
 const verifyConfig = require('./lib/verify-config');
 
-const PLUGIN_TYPES = ['getLastRelease', 'analyzeCommits', 'verifyRelease', 'generateNotes', 'publish'];
+const PLUGIN_TYPES = ['analyzeCommits', 'verifyRelease', 'generateNotes', 'publish'];
 
 async function verifyConditions(pluginConfig, params) {
   for (const [option, value] of Object.entries(params.options || {})) {
@@ -29,11 +28,6 @@ async function verifyConditions(pluginConfig, params) {
   }
 }
 
-async function getLastRelease(pluginConfig, params) {
-  const stdout = await execScript(pluginConfig, params);
-  return stdout ? parseJson(stdout) : undefined;
-}
-
 async function analyzeCommits(pluginConfig, params) {
   const stdout = await execScript(pluginConfig, params);
   return stdout.trim() ? stdout : undefined;
@@ -55,4 +49,4 @@ async function publish(pluginConfig, params) {
   await execScript(pluginConfig, params);
 }
 
-module.exports = {verifyConditions, getLastRelease, analyzeCommits, verifyRelease, generateNotes, publish};
+module.exports = {verifyConditions, analyzeCommits, verifyRelease, generateNotes, publish};

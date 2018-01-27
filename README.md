@@ -16,16 +16,6 @@ Execute a shell command to verify if the release should happen.
 | `stdout`         | Write only the reason for the verification to fail.                      |
 | `stderr`         | Can be used for logging.                                                 |
 
-## getLastRelease
-
-Execute a shell command to determine the last release.
-
-| Command property | Description                                                                                                                   |
-|------------------|-------------------------------------------------------------------------------------------------------------------------------|
-| `exit code`      | Any non `0` code is considered as an unexpected error and will stop the `semantic-release` execution with an error.           |
-| `stdout`         | Only the `lastRelease` must be written to `stdout` as parseable JSON (for example `{"version": "x.x.x", "gitHead": "xxxx"}`). |
-| `stderr`         | Can be used for logging.                                                                                                      |
-
 ## analyzeCommits
 
 Execute a shell command to determine the type release.
