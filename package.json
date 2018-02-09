@@ -72,7 +72,8 @@
     "trailingComma": "es5"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "tag": "next"
   },
   "repository": {
     "type": "git",
