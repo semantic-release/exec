@@ -21,7 +21,7 @@ test.serial('Return the value fail script wrote to stdout', async t => {
   await t.notThrows(fail(pluginConfig, params));
 });
 
-test.serial('Throw "Error" if if the fail script does not returns 0', async t => {
+test.serial('Throw "Error" if the fail script does not returns 0', async t => {
   const pluginConfig = {cmd: 'exit 1'};
   const params = {logger: t.context.logger};
 
