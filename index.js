@@ -51,4 +51,12 @@ async function publish(pluginConfig, params) {
   return stdout.trim() ? parseJson(stdout) : undefined;
 }
 
-module.exports = {verifyConditions, analyzeCommits, verifyRelease, generateNotes, publish};
+async function success(pluginConfig, params) {
+  await execScript(pluginConfig, params);
+}
+
+async function fail(pluginConfig, params) {
+  await execScript(pluginConfig, params);
+}
+
+module.exports = {verifyConditions, analyzeCommits, verifyRelease, generateNotes, publish, success, fail};
