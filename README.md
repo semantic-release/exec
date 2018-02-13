@@ -53,11 +53,11 @@ Execute a shell command to generate the release note.
 
 Execute a shell command to publish the release.
 
-| Command property | Description                                                                                                         |
-|------------------|---------------------------------------------------------------------------------------------------------------------|
-| `exit code`      | Any non `0` code is considered as an unexpected error and will stop the `semantic-release` execution with an error. |
-| `stdout`         | Can be used for logging.                                                                                            |
-| `stderr`         | Can be used for logging.                                                                                            |
+| Command property | Description                                                                                                                                               |
+|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `exit code`      | Any non `0` code is considered as an unexpected error and will stop the `semantic-release` execution with an error.                                       |
+| `stdout`         | Only the `release` information must be written to `stdout` as parseable JSON (for example `{"name": "Release name", "url": "http://url/release/1.0.0"}`). |
+| `stderr`         | Can be used for logging.                                                                                                                                  |
 
 ## Configuration
 

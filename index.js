@@ -1,4 +1,5 @@
 const {castArray, isPlainObject} = require('lodash');
+const parseJson = require('parse-json');
 const SemanticReleaseError = require('@semantic-release/error');
 const execScript = require('./lib/exec-script');
 const verifyConfig = require('./lib/verify-config');
@@ -46,7 +47,8 @@ async function generateNotes(pluginConfig, params) {
 }
 
 async function publish(pluginConfig, params) {
-  await execScript(pluginConfig, params);
+  const stdout = await execScript(pluginConfig, params);
+  return stdout.trim() ? parseJson(stdout) : undefined;
 }
 
 module.exports = {verifyConditions, analyzeCommits, verifyRelease, generateNotes, publish};
