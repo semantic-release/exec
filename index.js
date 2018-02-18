@@ -4,7 +4,7 @@ const SemanticReleaseError = require('@semantic-release/error');
 const execScript = require('./lib/exec-script');
 const verifyConfig = require('./lib/verify-config');
 
-const PLUGIN_TYPES = ['analyzeCommits', 'verifyRelease', 'generateNotes', 'publish'];
+const PLUGIN_TYPES = ['analyzeCommits', 'verifyRelease', 'generateNotes', 'publish', 'success', 'fail'];
 
 async function verifyConditions(pluginConfig, params) {
   for (const [option, value] of Object.entries(params.options || {})) {
