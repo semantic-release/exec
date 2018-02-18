@@ -12,10 +12,8 @@ test.beforeEach(t => {
   t.context.logger = {log: t.context.log, error: t.context.error};
 });
 
-test.serial('Return the value success script wrote to stdout', async t => {
-  const pluginConfig = {
-    cmd: './test/fixtures/echo-args.sh',
-  };
+test.serial('Execute script in success step', async t => {
+  const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
   const params = {logger: t.context.logger};
 
   await t.notThrows(success(pluginConfig, params));

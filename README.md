@@ -49,6 +49,16 @@ Execute a shell command to generate the release note.
 | `stdout`         | Only the release note must be written to `stdout`.                                                                  |
 | `stderr`         | Can be used for logging.                                                                                            |
 
+## prepare
+
+Execute a shell command to prepare the release.
+
+| Command property | Description                                                                                                         |
+|------------------|---------------------------------------------------------------------------------------------------------------------|
+| `exit code`      | Any non `0` code is considered as an unexpected error and will stop the `semantic-release` execution with an error. |
+| `stdout`         | Can be used for logging.                                                                                            |
+| `stderr`         | Can be used for logging.                                                                                            |
+
 ## publish
 
 Execute a shell command to publish the release.

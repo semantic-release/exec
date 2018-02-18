@@ -46,6 +46,10 @@ async function generateNotes(pluginConfig, params) {
   return execScript(pluginConfig, params);
 }
 
+async function prepare(pluginConfig, params) {
+  await execScript(pluginConfig, params);
+}
+
 async function publish(pluginConfig, params) {
   const stdout = await execScript(pluginConfig, params);
   return stdout.trim() ? parseJson(stdout) : undefined;
@@ -59,4 +63,4 @@ async function fail(pluginConfig, params) {
   await execScript(pluginConfig, params);
 }
 
-module.exports = {verifyConditions, analyzeCommits, verifyRelease, generateNotes, publish, success, fail};
+module.exports = {verifyConditions, analyzeCommits, verifyRelease, generateNotes, prepare, publish, success, fail};
