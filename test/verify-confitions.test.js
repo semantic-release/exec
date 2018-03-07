@@ -40,11 +40,11 @@ test.serial('Throw "SemanticReleaseError" if "cmd" options is empty', async t =>
   t.is(error.code, 'EINVALIDCMD');
 });
 
-test.serial('Throw "SemanticReleaseError" if another script plugin "cmd" options is missing', async t => {
+test.serial('Throw "SemanticReleaseError" if another exec plugin "cmd" options is missing', async t => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
   const params = {
     logger: t.context.logger,
-    options: {publish: ['@semantic-release/npm', {path: '@semantic-release/script'}]},
+    options: {publish: ['@semantic-release/npm', {path: '@semantic-release/exec'}]},
   };
 
   const error = await t.throws(verifyConditions(pluginConfig, params));
@@ -53,13 +53,13 @@ test.serial('Throw "SemanticReleaseError" if another script plugin "cmd" options
   t.is(error.code, 'EINVALIDCMD');
 });
 
-test.serial('Throw "SemanticReleaseError" if another script plugin "cmd" options is empty', async t => {
+test.serial('Throw "SemanticReleaseError" if another exec plugin "cmd" options is empty', async t => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
   const params = {
     logger: t.context.logger,
     options: {
       branch: 'master',
-      publish: ['@semantic-release/npm', {path: '@semantic-release/script', cmd: '  '}],
+      publish: ['@semantic-release/npm', {path: '@semantic-release/exec', cmd: '  '}],
     },
   };
 
