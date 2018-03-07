@@ -11,8 +11,8 @@ async function verifyConditions(pluginConfig, params) {
     if (PLUGIN_TYPES.includes(option)) {
       for (const plugin of castArray(value)) {
         if (
-          plugin === '@semantic-release/script' ||
-          (isPlainObject(plugin) && plugin.path === '@semantic-release/script')
+          plugin === '@semantic-release/exec' ||
+          (isPlainObject(plugin) && plugin.path === '@semantic-release/exec')
         ) {
           verifyConfig(plugin);
         }
