@@ -1,5 +1,6 @@
 const {castArray, isPlainObject} = require('lodash');
 const parseJson = require('parse-json');
+const debug = require('debug')('semantic-release:exec');
 const SemanticReleaseError = require('@semantic-release/error');
 const execScript = require('./lib/exec-script');
 const verifyConfig = require('./lib/verify-config');
@@ -52,7 +53,15 @@ async function prepare(pluginConfig, params) {
 
 async function publish(pluginConfig, params) {
   const stdout = await execScript(pluginConfig, params);
-  return stdout.trim() ? parseJson(stdout) : undefined;
+  try {
+    return stdout.trim() ? parseJson(stdout) : undefined;
+  } catch (err) {
+    debug(stdout);
+    debug(err);
+    params.logger.log(
+      `The command ${pluginConfig.cmd} wrote invalid JSON to stdout. The stdout content will be ignored.`
+    );
+  }
 }
 
 async function success(pluginConfig, params) {

@@ -24,6 +24,16 @@ test.serial('Parse JSON returned by publish script', async t => {
   t.deepEqual(result, {name: 'Release name', url: 'https://host.com/release/1.0.0'});
 });
 
+test.serial('Return "undefined" if the publish script wrtite invalid JSON to stdout', async t => {
+  const pluginConfig = {
+    cmd: './test/fixtures/echo-args.sh invalid_json',
+  };
+  const params = {logger: t.context.logger};
+
+  const result = await publish(pluginConfig, params);
+  t.is(result, undefined);
+});
+
 test.serial('Return "undefined" if the publish script wrtite nothing to stdout', async t => {
   const pluginConfig = {
     cmd: './test/fixtures/echo-args.sh',
@@ -32,16 +42,6 @@ test.serial('Return "undefined" if the publish script wrtite nothing to stdout',
 
   const result = await publish(pluginConfig, params);
   t.is(result, undefined);
-});
-
-test.serial('Throw JSONError if publish script write invalid JSON to stdout', async t => {
-  const pluginConfig = {
-    cmd: './test/fixtures/echo-args.sh invalid_json',
-  };
-  const params = {logger: t.context.logger};
-
-  const error = await t.throws(publish(pluginConfig, params));
-  t.is(error.name, 'JSONError');
 });
 
 test.serial('Throw "Error" if the publish script does not returns 0', async t => {
