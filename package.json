@@ -30,7 +30,7 @@
     "nyc": "^11.1.0",
     "semantic-release": "^15.0.0",
     "sinon": "^5.0.1",
-    "xo": "^0.20.0"
+    "xo": "^0.21.0"
   },
   "engines": {
     "node": ">=8.3"
@@ -67,7 +67,8 @@
     "semantic-release": ">=13.0.0 <16.0.0"
   },
   "prettier": {
-    "printWidth": 120
+    "printWidth": 120,
+    "trailingComma": "es5"
   },
   "publishConfig": {
     "access": "public",
