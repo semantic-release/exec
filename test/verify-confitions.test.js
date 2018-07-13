@@ -13,49 +13,49 @@ test.beforeEach(t => {
   t.context.logger = {log: t.context.log, error: t.context.error};
 });
 
-test.serial('Verify plugin config is an Object with a "cmd" property', async t => {
+test('Verify plugin config is an Object with a "cmd" property', async t => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
-  const params = {logger: t.context.logger};
+  const context = {logger: t.context.logger};
 
-  await t.notThrows(verifyConditions(pluginConfig, params));
+  await t.notThrows(verifyConditions(pluginConfig, context));
 });
 
-test.serial('Throw "SemanticReleaseError" if "cmd" options is missing', async t => {
+test('Throw "SemanticReleaseError" if "cmd" options is missing', async t => {
   const pluginConfig = {};
-  const params = {logger: t.context.logger};
+  const context = {logger: t.context.logger};
 
-  const error = await t.throws(verifyConditions(pluginConfig, params));
+  const error = await t.throws(verifyConditions(pluginConfig, context));
 
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EINVALIDCMD');
 });
 
-test.serial('Throw "SemanticReleaseError" if "cmd" options is empty', async t => {
+test('Throw "SemanticReleaseError" if "cmd" options is empty', async t => {
   const pluginConfig = {cmd: '      '};
-  const params = {logger: t.context.logger, options: {}};
+  const context = {logger: t.context.logger, options: {}};
 
-  const error = await t.throws(verifyConditions(pluginConfig, params));
+  const error = await t.throws(verifyConditions(pluginConfig, context));
 
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EINVALIDCMD');
 });
 
-test.serial('Throw "SemanticReleaseError" if another exec plugin "cmd" options is missing', async t => {
+test('Throw "SemanticReleaseError" if another exec plugin "cmd" options is missing', async t => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
-  const params = {
+  const context = {
     logger: t.context.logger,
     options: {publish: ['@semantic-release/npm', {path: '@semantic-release/exec'}]},
   };
 
-  const error = await t.throws(verifyConditions(pluginConfig, params));
+  const error = await t.throws(verifyConditions(pluginConfig, context));
 
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EINVALIDCMD');
 });
 
-test.serial('Throw "SemanticReleaseError" if another exec plugin "cmd" options is empty', async t => {
+test('Throw "SemanticReleaseError" if another exec plugin "cmd" options is empty', async t => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
-  const params = {
+  const context = {
     logger: t.context.logger,
     options: {
       branch: 'master',
@@ -63,24 +63,24 @@ test.serial('Throw "SemanticReleaseError" if another exec plugin "cmd" options i
     },
   };
 
-  const error = await t.throws(verifyConditions(pluginConfig, params));
+  const error = await t.throws(verifyConditions(pluginConfig, context));
 
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EINVALIDCMD');
 });
 
-test.serial('Return if the verifyConditions script returns 0', async t => {
+test('Return if the verifyConditions script returns 0', async t => {
   const pluginConfig = {cmd: 'exit 0'};
-  const params = {logger: t.context.logger, options: {}};
+  const context = {logger: t.context.logger, options: {}};
 
-  await t.notThrows(verifyConditions(pluginConfig, params));
+  await t.notThrows(verifyConditions(pluginConfig, context));
 });
 
-test.serial('Throw "SemanticReleaseError" if the verifyConditions script does not returns 0', async t => {
+test('Throw "SemanticReleaseError" if the verifyConditions script does not returns 0', async t => {
   const pluginConfig = {cmd: 'exit 1'};
-  const params = {logger: t.context.logger, options: {}};
+  const context = {logger: t.context.logger, options: {}};
 
-  const error = await t.throws(verifyConditions(pluginConfig, params));
+  const error = await t.throws(verifyConditions(pluginConfig, context));
 
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EVERIFYCONDITIONS');

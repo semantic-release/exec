@@ -12,19 +12,19 @@ test.beforeEach(t => {
   t.context.logger = {log: t.context.log, error: t.context.error};
 });
 
-test.serial('Return the value generateNotes script wrote to stdout', async t => {
+test('Return the value generateNotes script wrote to stdout', async t => {
   const pluginConfig = {
     cmd: './test/fixtures/echo-args.sh "\nRelease note \n\n"',
   };
-  const params = {logger: t.context.logger};
+  const context = {logger: t.context.logger};
 
-  const result = await generateNotes(pluginConfig, params);
+  const result = await generateNotes(pluginConfig, context);
   t.is(result, 'Release note');
 });
 
-test.serial('Throw "Error" if if the generateNotes script does not returns 0', async t => {
+test('Throw "Error" if if the generateNotes script does not returns 0', async t => {
   const pluginConfig = {cmd: 'exit 1'};
-  const params = {logger: t.context.logger};
+  const context = {logger: t.context.logger};
 
-  await t.throws(generateNotes(pluginConfig, params), Error);
+  await t.throws(generateNotes(pluginConfig, context), Error);
 });

@@ -13,29 +13,29 @@ test.beforeEach(t => {
   t.context.logger = {log: t.context.log, error: t.context.error};
 });
 
-test.serial('Return the value analyzeCommits script wrote to stdout', async t => {
+test('Return the value analyzeCommits script wrote to stdout', async t => {
   const pluginConfig = {
     cmd: './test/fixtures/echo-args.sh "minor   "',
   };
-  const params = {logger: t.context.logger};
+  const context = {logger: t.context.logger};
 
-  const result = await analyzeCommits(pluginConfig, params);
+  const result = await analyzeCommits(pluginConfig, context);
   t.is(result, 'minor');
 });
 
-test.serial('Return "undefined" if the analyzeCommits script wrtite nothing to stdout', async t => {
+test('Return "undefined" if the analyzeCommits script wrtite nothing to stdout', async t => {
   const pluginConfig = {
     cmd: './test/fixtures/echo-args.sh "   "',
   };
-  const params = {logger: t.context.logger};
+  const context = {logger: t.context.logger};
 
-  const result = await analyzeCommits(pluginConfig, params);
+  const result = await analyzeCommits(pluginConfig, context);
   t.is(result, undefined);
 });
 
-test.serial('Throw Error if if the analyzeCommits script does not returns 0', async t => {
+test('Throw Error if if the analyzeCommits script does not returns 0', async t => {
   const pluginConfig = {cmd: 'exit 1'};
-  const params = {logger: t.context.logger};
+  const context = {logger: t.context.logger};
 
-  await t.throws(analyzeCommits(pluginConfig, params), Error);
+  await t.throws(analyzeCommits(pluginConfig, context), Error);
 });
