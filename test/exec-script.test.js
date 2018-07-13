@@ -19,9 +19,9 @@ test.afterEach.always(t => {
 
 test.serial('Pipe script output to stdout and stderr', async t => {
   const pluginConfig = {cmd: '>&2 echo "write to stderr" && echo "write to stdout"'};
-  const params = {logger: t.context.logger, options: {}};
+  const context = {logger: t.context.logger, options: {}};
 
-  const result = await execScript(pluginConfig, params);
+  const result = await execScript(pluginConfig, context);
 
   t.is(result, 'write to stdout');
   t.is(t.context.stdout.args[0][0].toString().trim(), 'write to stdout');
@@ -30,8 +30,8 @@ test.serial('Pipe script output to stdout and stderr', async t => {
 
 test.serial('Generate command with template', async t => {
   const pluginConfig = {cmd: `./test/fixtures/echo-args.sh \${config.conf} \${lastRelease.version}`, conf: 'confValue'};
-  const params = {lastRelease: {version: '1.0.0'}, logger: t.context.logger};
+  const context = {lastRelease: {version: '1.0.0'}, logger: t.context.logger};
 
-  const result = await execScript(pluginConfig, params);
+  const result = await execScript(pluginConfig, context);
   t.is(result, 'confValue 1.0.0');
 });

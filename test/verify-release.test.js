@@ -13,18 +13,18 @@ test.beforeEach(t => {
   t.context.logger = {log: t.context.log, error: t.context.error};
 });
 
-test.serial('Return if the verifyRelease script returns 0', async t => {
+test('Return if the verifyRelease script returns 0', async t => {
   const pluginConfig = {cmd: 'exit 0'};
-  const params = {logger: t.context.logger, options: {}};
+  const context = {logger: t.context.logger, options: {}};
 
-  await t.notThrows(verifyRelease(pluginConfig, params));
+  await t.notThrows(verifyRelease(pluginConfig, context));
 });
 
-test.serial('Throw "SemanticReleaseError" if the verifyRelease script does not returns 0', async t => {
+test('Throw "SemanticReleaseError" if the verifyRelease script does not returns 0', async t => {
   const pluginConfig = {cmd: 'exit 1'};
-  const params = {logger: t.context.logger, options: {}};
+  const context = {logger: t.context.logger, options: {}};
 
-  const error = await t.throws(verifyRelease(pluginConfig, params));
+  const error = await t.throws(verifyRelease(pluginConfig, context));
 
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EVERIFYRELEASE');
