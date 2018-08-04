@@ -30,6 +30,7 @@
     "nyc": "^12.0.1",
     "semantic-release": "^15.0.0",
     "sinon": "^6.0.0",
+    "stream-buffers": "^3.0.2",
     "xo": "^0.21.0"
   },
   "engines": {
@@ -64,7 +65,7 @@
     "all": true
   },
   "peerDependencies": {
-    "semantic-release": ">=13.0.0 <16.0.0"
+    "semantic-release": ">=15.9.0 <16.0.0"
   },
   "prettier": {
     "printWidth": 120,
