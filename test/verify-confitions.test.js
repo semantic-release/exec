@@ -1,12 +1,11 @@
 import test from 'ava';
 import {stub} from 'sinon';
+import {WritableStreamBuffer} from 'stream-buffers';
 import {verifyConditions} from '..';
 
-// Disable logs during tests
-stub(process.stdout, 'write');
-stub(process.stderr, 'write');
-
 test.beforeEach(t => {
+  t.context.stdout = new WritableStreamBuffer();
+  t.context.stderr = new WritableStreamBuffer();
   // Mock logger
   t.context.log = stub();
   t.context.error = stub();
@@ -15,14 +14,14 @@ test.beforeEach(t => {
 
 test('Verify plugin config is an Object with a "cmd" property', async t => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
-  const context = {logger: t.context.logger};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
   await t.notThrows(verifyConditions(pluginConfig, context));
 });
 
 test('Throw "SemanticReleaseError" if "cmd" options is missing', async t => {
   const pluginConfig = {};
-  const context = {logger: t.context.logger};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
   const error = await t.throws(verifyConditions(pluginConfig, context));
 
@@ -32,7 +31,7 @@ test('Throw "SemanticReleaseError" if "cmd" options is missing', async t => {
 
 test('Throw "SemanticReleaseError" if "cmd" options is empty', async t => {
   const pluginConfig = {cmd: '      '};
-  const context = {logger: t.context.logger, options: {}};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
 
   const error = await t.throws(verifyConditions(pluginConfig, context));
 
@@ -43,6 +42,8 @@ test('Throw "SemanticReleaseError" if "cmd" options is empty', async t => {
 test('Throw "SemanticReleaseError" if another exec plugin "cmd" options is missing', async t => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
   const context = {
+    stdout: t.context.stdout,
+    stderr: t.context.stderr,
     logger: t.context.logger,
     options: {publish: ['@semantic-release/npm', {path: '@semantic-release/exec'}]},
   };
@@ -56,6 +57,8 @@ test('Throw "SemanticReleaseError" if another exec plugin "cmd" options is missi
 test('Throw "SemanticReleaseError" if another exec plugin "cmd" options is empty', async t => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
   const context = {
+    stdout: t.context.stdout,
+    stderr: t.context.stderr,
     logger: t.context.logger,
     options: {
       branch: 'master',
@@ -71,14 +74,14 @@ test('Throw "SemanticReleaseError" if another exec plugin "cmd" options is empty
 
 test('Return if the verifyConditions script returns 0', async t => {
   const pluginConfig = {cmd: 'exit 0'};
-  const context = {logger: t.context.logger, options: {}};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
 
   await t.notThrows(verifyConditions(pluginConfig, context));
 });
 
 test('Throw "SemanticReleaseError" if the verifyConditions script does not returns 0', async t => {
   const pluginConfig = {cmd: 'exit 1'};
-  const context = {logger: t.context.logger, options: {}};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
 
   const error = await t.throws(verifyConditions(pluginConfig, context));
 
