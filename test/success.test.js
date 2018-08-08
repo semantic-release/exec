@@ -19,6 +19,26 @@ test('Execute script in success step', async t => {
   await t.notThrows(success(pluginConfig, context));
 });
 
+test('Throw "SemanticReleaseError" if "cmd" options is missing', async t => {
+  const pluginConfig = {};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
+
+  const error = await t.throws(success(pluginConfig, context));
+
+  t.is(error.name, 'SemanticReleaseError');
+  t.is(error.code, 'EINVALIDCMD');
+});
+
+test('Throw "SemanticReleaseError" if "cmd" options is empty', async t => {
+  const pluginConfig = {cmd: '      '};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
+
+  const error = await t.throws(success(pluginConfig, context));
+
+  t.is(error.name, 'SemanticReleaseError');
+  t.is(error.code, 'EINVALIDCMD');
+});
+
 test('Throw "Error" if the success script does not returns 0', async t => {
   const pluginConfig = {cmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
