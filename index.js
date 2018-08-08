@@ -1,26 +1,10 @@
-const {castArray, isPlainObject} = require('lodash');
 const parseJson = require('parse-json');
 const debug = require('debug')('semantic-release:exec');
 const SemanticReleaseError = require('@semantic-release/error');
 const execScript = require('./lib/exec-script');
 const verifyConfig = require('./lib/verify-config');
 
-const PLUGIN_TYPES = ['analyzeCommits', 'verifyRelease', 'generateNotes', 'publish', 'success', 'fail'];
-
 async function verifyConditions(pluginConfig, context) {
-  for (const [option, value] of Object.entries(context.options || {})) {
-    if (PLUGIN_TYPES.includes(option)) {
-      for (const plugin of castArray(value)) {
-        if (
-          plugin === '@semantic-release/exec' ||
-          (isPlainObject(plugin) && plugin.path === '@semantic-release/exec')
-        ) {
-          verifyConfig(plugin);
-        }
-      }
-    }
-  }
-
   verifyConfig(pluginConfig);
 
   try {
@@ -31,11 +15,15 @@ async function verifyConditions(pluginConfig, context) {
 }
 
 async function analyzeCommits(pluginConfig, context) {
+  verifyConfig(pluginConfig);
+
   const stdout = await execScript(pluginConfig, context);
   return stdout.trim() ? stdout : undefined;
 }
 
 async function verifyRelease(pluginConfig, context) {
+  verifyConfig(pluginConfig);
+
   try {
     await execScript(pluginConfig, context);
   } catch (err) {
@@ -44,15 +32,22 @@ async function verifyRelease(pluginConfig, context) {
 }
 
 async function generateNotes(pluginConfig, context) {
+  verifyConfig(pluginConfig);
+
   return execScript(pluginConfig, context);
 }
 
 async function prepare(pluginConfig, context) {
+  verifyConfig(pluginConfig);
+
   await execScript(pluginConfig, context);
 }
 
 async function publish(pluginConfig, context) {
+  verifyConfig(pluginConfig);
+
   const stdout = await execScript(pluginConfig, context);
+
   try {
     return stdout.trim() ? parseJson(stdout) : undefined;
   } catch (err) {
@@ -65,10 +60,14 @@ async function publish(pluginConfig, context) {
 }
 
 async function success(pluginConfig, context) {
+  verifyConfig(pluginConfig);
+
   await execScript(pluginConfig, context);
 }
 
 async function fail(pluginConfig, context) {
+  verifyConfig(pluginConfig);
+
   await execScript(pluginConfig, context);
 }
 
