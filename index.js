@@ -18,7 +18,7 @@ async function analyzeCommits(pluginConfig, context) {
   verifyConfig(pluginConfig);
 
   const stdout = await execScript(pluginConfig, context);
-  return stdout.trim() ? stdout : undefined;
+  return stdout || undefined;
 }
 
 async function verifyRelease(pluginConfig, context) {
@@ -49,7 +49,7 @@ async function publish(pluginConfig, context) {
   const stdout = await execScript(pluginConfig, context);
 
   try {
-    return stdout.trim() ? parseJson(stdout) : undefined;
+    return stdout ? parseJson(stdout) : undefined;
   } catch (err) {
     debug(stdout);
     debug(err);
