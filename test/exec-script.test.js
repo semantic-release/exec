@@ -12,7 +12,7 @@ test.beforeEach(t => {
   t.context.logger = {log: t.context.log, error: t.context.error};
 });
 
-test.serial('Pipe script output to stdout and stderr', async t => {
+test('Pipe script output to stdout and stderr', async t => {
   const pluginConfig = {cmd: '>&2 echo "write to stderr" && echo "write to stdout"'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
 
@@ -23,7 +23,7 @@ test.serial('Pipe script output to stdout and stderr', async t => {
   t.is(t.context.stderr.getContentsAsString('utf8').trim(), 'write to stderr');
 });
 
-test.serial('Generate command with template', async t => {
+test('Generate command with template', async t => {
   const pluginConfig = {cmd: `./test/fixtures/echo-args.sh \${config.conf} \${lastRelease.version}`, conf: 'confValue'};
   const context = {
     stdout: t.context.stdout,
@@ -34,4 +34,14 @@ test.serial('Generate command with template', async t => {
 
   const result = await execScript(pluginConfig, context);
   t.is(result, 'confValue 1.0.0');
+});
+
+test('Execute the script with the specified "shell"', async t => {
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
+
+  let result = await execScript({cmd: 'echo $0', shell: 'bash'}, context);
+  t.is(result, 'bash');
+
+  result = await execScript({cmd: 'echo $0', shell: 'sh'}, context);
+  t.is(result, 'sh');
 });
