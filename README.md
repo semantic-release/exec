@@ -93,9 +93,10 @@ Execute a shell command to notify of a failed release.
 
 ### Options
 
-| Options | Description                                    |
-|---------|------------------------------------------------|
-| `cmd`   | The shell command to execute. See [cmd](#cmd). |
+| Options | Description                                                                                          |
+|---------|------------------------------------------------------------------------------------------------------|
+| `cmd`   | The shell command to execute. See [cmd](#cmd).                                                       |
+| `shell` | The shell to use to run the command. See [execa#shell](https://github.com/sindresorhus/execa#shell). |
 
 #### `cmd`
 
