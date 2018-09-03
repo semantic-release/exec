@@ -9,8 +9,8 @@ async function verifyConditions(pluginConfig, context) {
 
   try {
     await execScript(pluginConfig, context);
-  } catch (err) {
-    throw new SemanticReleaseError(err.stdout, 'EVERIFYCONDITIONS');
+  } catch (error) {
+    throw new SemanticReleaseError(error.stdout, 'EVERIFYCONDITIONS');
   }
 }
 
@@ -26,15 +26,16 @@ async function verifyRelease(pluginConfig, context) {
 
   try {
     await execScript(pluginConfig, context);
-  } catch (err) {
-    throw new SemanticReleaseError(err.stdout, 'EVERIFYRELEASE');
+  } catch (error) {
+    throw new SemanticReleaseError(error.stdout, 'EVERIFYRELEASE');
   }
 }
 
 async function generateNotes(pluginConfig, context) {
   verifyConfig(pluginConfig);
 
-  return execScript(pluginConfig, context);
+  const stdout = await execScript(pluginConfig, context);
+  return stdout;
 }
 
 async function prepare(pluginConfig, context) {
@@ -50,9 +51,9 @@ async function publish(pluginConfig, context) {
 
   try {
     return stdout ? parseJson(stdout) : undefined;
-  } catch (err) {
+  } catch (error) {
     debug(stdout);
-    debug(err);
+    debug(error);
     context.logger.log(
       `The command ${pluginConfig.cmd} wrote invalid JSON to stdout. The stdout content will be ignored.`
     );
