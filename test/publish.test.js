@@ -14,6 +14,48 @@ test.beforeEach(t => {
 
 test('Parse JSON returned by publish script', async t => {
   const pluginConfig = {
+    publishCmd:
+      './test/fixtures/echo-args.sh {\\"name\\": \\"Release name\\", \\"url\\": \\"https://host.com/release/1.0.0\\"}',
+  };
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
+
+  const result = await publish(pluginConfig, context);
+  t.deepEqual(result, {name: 'Release name', url: 'https://host.com/release/1.0.0'});
+});
+
+test('Return "undefined" if the publish script wrtite invalid JSON to stdout (with "publishCmd")', async t => {
+  const pluginConfig = {publishCmd: './test/fixtures/echo-args.sh invalid_json'};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
+
+  const result = await publish(pluginConfig, context);
+  t.is(result, undefined);
+});
+
+test('Return "undefined" if the publish script wrtite invalid JSON to stdout (with "cmd")', async t => {
+  const pluginConfig = {cmd: './test/fixtures/echo-args.sh invalid_json'};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
+
+  const result = await publish(pluginConfig, context);
+  t.is(result, undefined);
+});
+
+test('Return "undefined" if the publish script wrtite nothing to stdout', async t => {
+  const pluginConfig = {publishCmd: './test/fixtures/echo-args.sh'};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
+
+  const result = await publish(pluginConfig, context);
+  t.is(result, undefined);
+});
+
+test('Throw "Error" if the publish script does not returns 0', async t => {
+  const pluginConfig = {publishCmd: 'exit 1'};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
+
+  await t.throws(publish(pluginConfig, context), Error);
+});
+
+test('Use "cmd" if defined and "publishCmd" is not', async t => {
+  const pluginConfig = {
     cmd:
       './test/fixtures/echo-args.sh {\\"name\\": \\"Release name\\", \\"url\\": \\"https://host.com/release/1.0.0\\"}',
   };
@@ -23,59 +65,14 @@ test('Parse JSON returned by publish script', async t => {
   t.deepEqual(result, {name: 'Release name', url: 'https://host.com/release/1.0.0'});
 });
 
-test('Return "undefined" if the publish script wrtite invalid JSON to stdout', async t => {
+test('Use "publishCmd" even if "cmd" is defined', async t => {
   const pluginConfig = {
-    cmd: './test/fixtures/echo-args.sh invalid_json',
+    publishCmd:
+      './test/fixtures/echo-args.sh {\\"name\\": \\"Release name\\", \\"url\\": \\"https://host.com/release/1.0.0\\"}',
+    cmd: 'exit 1',
   };
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
   const result = await publish(pluginConfig, context);
-  t.is(result, undefined);
-});
-
-test('Return "undefined" if the publish script wrtite nothing to stdout', async t => {
-  const pluginConfig = {
-    cmd: './test/fixtures/echo-args.sh',
-  };
-  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
-
-  const result = await publish(pluginConfig, context);
-  t.is(result, undefined);
-});
-
-test('Throw "SemanticReleaseError" if "cmd" options is missing', async t => {
-  const pluginConfig = {};
-  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
-
-  const error = await t.throws(publish(pluginConfig, context));
-
-  t.is(error.name, 'SemanticReleaseError');
-  t.is(error.code, 'EINVALIDCMD');
-});
-
-test('Throw "SemanticReleaseError" if "cmd" options is empty', async t => {
-  const pluginConfig = {cmd: '      '};
-  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
-
-  const error = await t.throws(publish(pluginConfig, context));
-
-  t.is(error.name, 'SemanticReleaseError');
-  t.is(error.code, 'EINVALIDCMD');
-});
-
-test('Throw "SemanticReleaseError" if "shell" options is invalid', async t => {
-  const pluginConfig = {cmd: './test/fixtures/echo-args.sh', shell: '   '};
-  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
-
-  const error = await t.throws(publish(pluginConfig, context));
-
-  t.is(error.name, 'SemanticReleaseError');
-  t.is(error.code, 'EINVALIDSHELL');
-});
-
-test('Throw "Error" if the publish script does not returns 0', async t => {
-  const pluginConfig = {cmd: 'exit 1'};
-  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
-
-  await t.throws(publish(pluginConfig, context), Error);
+  t.deepEqual(result, {name: 'Release name', url: 'https://host.com/release/1.0.0'});
 });
