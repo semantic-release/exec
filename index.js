@@ -1,75 +1,93 @@
+const {isNil} = require('lodash');
 const parseJson = require('parse-json');
 const debug = require('debug')('semantic-release:exec');
 const SemanticReleaseError = require('@semantic-release/error');
-const execScript = require('./lib/exec-script');
+const exec = require('./lib/exec');
 const verifyConfig = require('./lib/verify-config');
 
 async function verifyConditions(pluginConfig, context) {
-  verifyConfig(pluginConfig);
+  if (!isNil(pluginConfig.verifyConditionsCmd) || !isNil(pluginConfig.cmd)) {
+    verifyConfig('verifyConditionsCmd', pluginConfig);
 
-  try {
-    await execScript(pluginConfig, context);
-  } catch (error) {
-    throw new SemanticReleaseError(error.stdout, 'EVERIFYCONDITIONS');
+    try {
+      await exec('verifyConditionsCmd', pluginConfig, context);
+    } catch (error) {
+      throw new SemanticReleaseError(error.stdout, 'EVERIFYCONDITIONS');
+    }
   }
 }
 
 async function analyzeCommits(pluginConfig, context) {
-  verifyConfig(pluginConfig);
+  if (!isNil(pluginConfig.analyzeCommitsCmd) || !isNil(pluginConfig.cmd)) {
+    verifyConfig('analyzeCommitsCmd', pluginConfig);
 
-  const stdout = await execScript(pluginConfig, context);
-  return stdout || undefined;
+    const stdout = await exec('analyzeCommitsCmd', pluginConfig, context);
+    return stdout || undefined;
+  }
 }
 
 async function verifyRelease(pluginConfig, context) {
-  verifyConfig(pluginConfig);
+  if (!isNil(pluginConfig.verifyReleaseCmd) || !isNil(pluginConfig.cmd)) {
+    verifyConfig('verifyReleaseCmd', pluginConfig);
 
-  try {
-    await execScript(pluginConfig, context);
-  } catch (error) {
-    throw new SemanticReleaseError(error.stdout, 'EVERIFYRELEASE');
+    try {
+      await exec('verifyReleaseCmd', pluginConfig, context);
+    } catch (error) {
+      throw new SemanticReleaseError(error.stdout, 'EVERIFYRELEASE');
+    }
   }
 }
 
 async function generateNotes(pluginConfig, context) {
-  verifyConfig(pluginConfig);
+  if (!isNil(pluginConfig.generateNotesCmd) || !isNil(pluginConfig.cmd)) {
+    verifyConfig('generateNotesCmd', pluginConfig);
 
-  const stdout = await execScript(pluginConfig, context);
-  return stdout;
+    const stdout = await exec('generateNotesCmd', pluginConfig, context);
+    return stdout;
+  }
 }
 
 async function prepare(pluginConfig, context) {
-  verifyConfig(pluginConfig);
+  if (!isNil(pluginConfig.prepareCmd) || !isNil(pluginConfig.cmd)) {
+    verifyConfig('prepareCmd', pluginConfig);
 
-  await execScript(pluginConfig, context);
+    await exec('prepareCmd', pluginConfig, context);
+  }
 }
 
 async function publish(pluginConfig, context) {
-  verifyConfig(pluginConfig);
+  if (!isNil(pluginConfig.publishCmd) || !isNil(pluginConfig.cmd)) {
+    verifyConfig('publishCmd', pluginConfig);
 
-  const stdout = await execScript(pluginConfig, context);
+    const stdout = await exec('publishCmd', pluginConfig, context);
 
-  try {
-    return stdout ? parseJson(stdout) : undefined;
-  } catch (error) {
-    debug(stdout);
-    debug(error);
-    context.logger.log(
-      `The command ${pluginConfig.cmd} wrote invalid JSON to stdout. The stdout content will be ignored.`
-    );
+    try {
+      return stdout ? parseJson(stdout) : undefined;
+    } catch (error) {
+      debug(stdout);
+      debug(error);
+      context.logger.log(
+        `The command ${pluginConfig.publishCmd ||
+          pluginConfig.cmd} wrote invalid JSON to stdout. The stdout content will be ignored.`
+      );
+    }
   }
 }
 
 async function success(pluginConfig, context) {
-  verifyConfig(pluginConfig);
+  if (!isNil(pluginConfig.successCmd) || !isNil(pluginConfig.cmd)) {
+    verifyConfig('successCmd', pluginConfig);
 
-  await execScript(pluginConfig, context);
+    await exec('successCmd', pluginConfig, context);
+  }
 }
 
 async function fail(pluginConfig, context) {
-  verifyConfig(pluginConfig);
+  if (!isNil(pluginConfig.failCmd) || !isNil(pluginConfig.cmd)) {
+    verifyConfig('failCmd', pluginConfig);
 
-  await execScript(pluginConfig, context);
+    await exec('failCmd', pluginConfig, context);
+  }
 }
 
 module.exports = {verifyConditions, analyzeCommits, verifyRelease, generateNotes, prepare, publish, success, fail};

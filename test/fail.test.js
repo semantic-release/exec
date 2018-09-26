@@ -13,45 +13,29 @@ test.beforeEach(t => {
 });
 
 test('Execute script in fail step', async t => {
+  const pluginConfig = {failCmd: './test/fixtures/echo-args.sh'};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
+
+  await t.notThrows(fail(pluginConfig, context));
+});
+
+test('Throw "Error" if the fail script does not returns 0', async t => {
+  const pluginConfig = {failCmd: 'exit 1'};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
+
+  await t.throws(fail(pluginConfig, context), Error);
+});
+
+test('Use "cmd" if defined and "failCmd" is not', async t => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
   await t.notThrows(fail(pluginConfig, context));
 });
 
-test('Throw "SemanticReleaseError" if "cmd" options is missing', async t => {
-  const pluginConfig = {};
+test('Use "failCmd" even if "cmd" is defined', async t => {
+  const pluginConfig = {failCmd: './test/fixtures/echo-args.sh', cmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
-  const error = await t.throws(fail(pluginConfig, context));
-
-  t.is(error.name, 'SemanticReleaseError');
-  t.is(error.code, 'EINVALIDCMD');
-});
-
-test('Throw "SemanticReleaseError" if "cmd" options is empty', async t => {
-  const pluginConfig = {cmd: '      '};
-  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
-
-  const error = await t.throws(fail(pluginConfig, context));
-
-  t.is(error.name, 'SemanticReleaseError');
-  t.is(error.code, 'EINVALIDCMD');
-});
-
-test('Throw "SemanticReleaseError" if "shell" options is invalid', async t => {
-  const pluginConfig = {cmd: './test/fixtures/echo-args.sh', shell: '   '};
-  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
-
-  const error = await t.throws(fail(pluginConfig, context));
-
-  t.is(error.name, 'SemanticReleaseError');
-  t.is(error.code, 'EINVALIDSHELL');
-});
-
-test('Throw "Error" if the fail script does not returns 0', async t => {
-  const pluginConfig = {cmd: 'exit 1'};
-  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
-
-  await t.throws(fail(pluginConfig, context), Error);
+  await t.notThrows(fail(pluginConfig, context));
 });
