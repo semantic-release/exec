@@ -1,7 +1,7 @@
 import test from 'ava';
 import verify from '../lib/verify-config';
 
-test('Verify "cmd" and "shell" options', t => {
+test('Verify "cmd", "shell" and "execCwd" options', t => {
   t.notThrows(() => verify('verifyConditionsCmd', {verifyConditionsCmd: 'shell cmd'}));
   t.notThrows(() => verify('analyzeCommitsCmd', {analyzeCommitsCmd: 'shell cmd'}));
   t.notThrows(() => verify('verifyReleaseCmd', {verifyReleaseCmd: 'shell cmd'}));
@@ -13,8 +13,8 @@ test('Verify "cmd" and "shell" options', t => {
 
   t.notThrows(() => verify('verifyConditionsCmd', {cmd: 'shell cmd'}));
 
-  t.notThrows(() => verify('verifyConditionsCmd', {cmd: 'shell cmd', shell: true}));
-  t.notThrows(() => verify('verifyConditionsCmd', {cmd: 'shell cmd', shell: 'bash'}));
+  t.notThrows(() => verify('verifyConditionsCmd', {cmd: 'shell cmd', shell: true, execCwd: 'scripts'}));
+  t.notThrows(() => verify('verifyConditionsCmd', {cmd: 'shell cmd', shell: 'bash', execCwd: 'scripts'}));
 });
 
 test('Throw SemanticReleaseError if "cmd" option is missing', t => {
@@ -109,6 +109,18 @@ test('Throw SemanticReleaseError if "shell" option is an empty String', t => {
   const [error] = t.throws(() => verify('verifyConditionsCmd', {shell: '    '}));
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EINVALIDSHELL');
+});
+
+test('Throw SemanticReleaseError if "execCwd" option is not a String', t => {
+  const [error] = t.throws(() => verify('verifyConditionsCmd', {execCwd: 1}));
+  t.is(error.name, 'SemanticReleaseError');
+  t.is(error.code, 'EINVALIDEXECCWD');
+});
+
+test('Throw SemanticReleaseError if "execCwd" option is an empty String', t => {
+  const [error] = t.throws(() => verify('verifyConditionsCmd', {execCwd: '    '}));
+  t.is(error.name, 'SemanticReleaseError');
+  t.is(error.code, 'EINVALIDEXECCWD');
 });
 
 test('Return SemanticReleaseError Array if multiple config are invalid', t => {

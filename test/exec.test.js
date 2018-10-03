@@ -1,3 +1,4 @@
+import path from 'path';
 import test from 'ava';
 import {stub} from 'sinon';
 import {WritableStreamBuffer} from 'stream-buffers';
@@ -54,4 +55,15 @@ test('Execute the script in "cmd" if no step specific command is passed', async 
 
   const result = await exec('publishCmd', {cmd: 'echo run cmd'}, context);
   t.is(result, 'run cmd');
+});
+
+test('Exececute the script in cmd from the relative in "execCwd"', async t => {
+  const pluginConfig = {
+    publishCmd: `./fixtures/echo-args.sh $PWD`,
+    execCwd: 'test',
+  };
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, cwd: process.cwd()};
+
+  const result = await exec('publishCmd', pluginConfig, context);
+  t.is(result, path.resolve(process.cwd(), 'test'));
 });
