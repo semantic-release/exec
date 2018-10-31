@@ -58,6 +58,7 @@ With this example:
 | `verifyReleaseCmd`    | The shell command to execute during the verify release step. See [verifyReleaseCmd](#verifyreleasecmd).                                                                                                                                                                                                                                  |
 | `generateNotesCmd`    | The shell command to execute during the generate notes step. See [generateNotesCmd](#generatenotescmd).                                                                                                                                                                                                                                  |
 | `prepareCmd`          | The shell command to execute during the prepare step. See [prepareCmd](#preparecmd).                                                                                                                                                                                                                                                     |
+| `addChannelCmd`       | The shell command to execute during the add channel step. See [addChannelCmd](#addchannelcmd).                                                                                                                                                                                                                                           |
 | `publishCmd`          | The shell command to execute during the publish step. See [publishCmd](#publishcmd).                                                                                                                                                                                                                                                     |
 | `successCmd`          | The shell command to execute during the success step. See [successCmd](#successcmd).                                                                                                                                                                                                                                                     |
 | `failCmd`             | The shell command to execute during the fail step. See [failCmd](#failcmd).                                                                                                                                                                                                                                                              |
@@ -107,6 +108,14 @@ Execute a shell command to verify if the release should happen.
 | `exit code`      | Any non `0` code is considered as an unexpected error and will stop the `semantic-release` execution with an error. |
 | `stdout`         | Can be used for logging.                                                                                            |
 | `stderr`         | Can be used for logging.                                                                                            |
+
+## addChannelCmd
+
+| Command property | Description                                                                                                                                                                                                                                        |
+|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `exit code`      | Any non `0` code is considered as an unexpected error and will stop the `semantic-release` execution with an error.                                                                                                                                |
+| `stdout`         | The `release` information can be written to `stdout` as parseable JSON (for example `{"name": "Release name", "url": "http://url/release/1.0.0"}`). If the command write non parseable JSON to `stdout` no `release` information will be returned. |
+| `stderr`         | Can be used for logging.                                                                                                                                                                                                                           |
 
 ## publishCmd
 
