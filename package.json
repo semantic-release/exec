@@ -28,9 +28,9 @@
     "codecov": "^3.0.0",
     "commitizen": "^3.0.0",
     "cz-conventional-changelog": "^2.0.0",
-    "nyc": "^12.0.1",
+    "nyc": "^13.1.0",
     "semantic-release": "^15.0.0",
-    "sinon": "^6.0.0",
+    "sinon": "^7.1.1",
     "stream-buffers": "^3.0.2",
     "xo": "^0.23.0"
   },
