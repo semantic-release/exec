@@ -76,3 +76,11 @@ test('Use "addChannelCmd" even if "cmd" is defined', async t => {
   const result = await addChannel(pluginConfig, context);
   t.deepEqual(result, {name: 'Release name', url: 'https://host.com/release/1.0.0'});
 });
+
+test('Return "false" if neither "addChannelCmd" nor "cmd" is defined', async t => {
+  const pluginConfig = {};
+  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
+
+  const result = await addChannel(pluginConfig, context);
+  t.is(result, false);
+});
