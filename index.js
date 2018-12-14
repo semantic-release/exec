@@ -66,12 +66,17 @@ async function publish(pluginConfig, context) {
     } catch (error) {
       debug(stdout);
       debug(error);
+
       context.logger.log(
         `The command ${pluginConfig.publishCmd ||
           pluginConfig.cmd} wrote invalid JSON to stdout. The stdout content will be ignored.`
       );
     }
+
+    return undefined;
   }
+
+  return false;
 }
 
 async function success(pluginConfig, context) {
