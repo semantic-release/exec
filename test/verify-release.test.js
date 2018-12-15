@@ -16,14 +16,14 @@ test('Return if the verifyRelease script returns 0', async t => {
   const pluginConfig = {verifyReleaseCmd: 'exit 0'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
 
-  await t.notThrows(verifyRelease(pluginConfig, context));
+  await t.notThrowsAsync(verifyRelease(pluginConfig, context));
 });
 
 test('Throw "SemanticReleaseError" if the verifyRelease script does not returns 0', async t => {
   const pluginConfig = {verifyReleaseCmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
 
-  const error = await t.throws(verifyRelease(pluginConfig, context));
+  const error = await t.throwsAsync(verifyRelease(pluginConfig, context));
 
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EVERIFYRELEASE');
@@ -33,12 +33,12 @@ test('Use "cmd" if defined and "verifyReleaseCmd" is not', async t => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
-  await t.notThrows(verifyRelease(pluginConfig, context));
+  await t.notThrowsAsync(verifyRelease(pluginConfig, context));
 });
 
 test('Use "verifyReleaseCmd" even if "cmd" is defined', async t => {
   const pluginConfig = {verifyReleaseCmd: './test/fixtures/echo-args.sh', cmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
-  await t.notThrows(verifyRelease(pluginConfig, context));
+  await t.notThrowsAsync(verifyRelease(pluginConfig, context));
 });
