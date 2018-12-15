@@ -24,7 +24,7 @@ test('Throw "Error" if if the generateNotes script does not returns 0', async t 
   const pluginConfig = {generateNotesCmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
-  await t.throws(generateNotes(pluginConfig, context), Error);
+  await t.throwsAsync(generateNotes(pluginConfig, context), Error);
 });
 
 test('Use "cmd" if defined and "generateNotesCmd" is not', async t => {

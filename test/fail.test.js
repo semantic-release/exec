@@ -16,26 +16,26 @@ test('Execute script in fail step', async t => {
   const pluginConfig = {failCmd: './test/fixtures/echo-args.sh'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
-  await t.notThrows(fail(pluginConfig, context));
+  await t.notThrowsAsync(fail(pluginConfig, context));
 });
 
 test('Throw "Error" if the fail script does not returns 0', async t => {
   const pluginConfig = {failCmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
-  await t.throws(fail(pluginConfig, context), Error);
+  await t.throwsAsync(fail(pluginConfig, context), Error);
 });
 
 test('Use "cmd" if defined and "failCmd" is not', async t => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
-  await t.notThrows(fail(pluginConfig, context));
+  await t.notThrowsAsync(fail(pluginConfig, context));
 });
 
 test('Use "failCmd" even if "cmd" is defined', async t => {
   const pluginConfig = {failCmd: './test/fixtures/echo-args.sh', cmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
-  await t.notThrows(fail(pluginConfig, context));
+  await t.notThrowsAsync(fail(pluginConfig, context));
 });

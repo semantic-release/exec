@@ -51,7 +51,7 @@ test('Throw "Error" if the addChannel script does not returns 0', async t => {
   const pluginConfig = {addChannelCmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
 
-  await t.throws(addChannel(pluginConfig, context), Error);
+  await t.throwsAsync(addChannel(pluginConfig, context), Error);
 });
 
 test('Use "cmd" if defined and "addChannelCmd" is not', async t => {
