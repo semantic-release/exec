@@ -67,7 +67,7 @@ async function publish(pluginConfig, context) {
       debug(stdout);
       debug(error);
 
-      context.logger.log(
+      debug(
         `The command ${pluginConfig.publishCmd ||
           pluginConfig.cmd} wrote invalid JSON to stdout. The stdout content will be ignored.`
       );
@@ -91,9 +91,7 @@ async function addChannel(pluginConfig, context) {
       debug(stdout);
       debug(error);
 
-      context.logger.log(
-        `The command ${pluginConfig.cmd} wrote invalid JSON to stdout. The stdout content will be ignored.`
-      );
+      debug(`The command ${pluginConfig.cmd} wrote invalid JSON to stdout. The stdout content will be ignored.`);
 
       return undefined;
     }
