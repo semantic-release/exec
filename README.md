@@ -47,6 +47,8 @@ With this example:
 - the shell command `./verify.sh` will be executed on the [verify conditions step](https://github.com/semantic-release/semantic-release#release-steps)
 - the shell command `./publish.sh 1.0.0 master 3 870668040000` (for the release of version `1.0.0` from branch `master` with `3` commits on `August 4th, 1997 at 2:14 AM`) will be executed on the [publish step](https://github.com/semantic-release/semantic-release#release-steps)
 
+**Note**: it's required to define a plugin for the [analyze commits step](https://github.com/semantic-release/semantic-release#release-steps). If no [analyzeCommitsCmd](#analyzecommitscmd) is defined the plugin [@semantic-release/commit-analyzer](https://github.com/semantic-release/commit-analyzer) must be defined in the `plugins` list.
+
 ## Configuration
 
 ### Options
