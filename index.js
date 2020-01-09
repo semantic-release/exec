@@ -79,6 +79,27 @@ async function publish(pluginConfig, context) {
   return false;
 }
 
+async function addChannel(pluginConfig, context) {
+  if (!isNil(pluginConfig.addChannelCmd) || !isNil(pluginConfig.cmd)) {
+    verifyConfig('addChannelCmd', pluginConfig);
+
+    const stdout = await exec('addChannelCmd', pluginConfig, context);
+
+    try {
+      return stdout ? parseJson(stdout) : undefined;
+    } catch (error) {
+      debug(stdout);
+      debug(error);
+
+      debug(`The command ${pluginConfig.cmd} wrote invalid JSON to stdout. The stdout content will be ignored.`);
+
+      return undefined;
+    }
+  }
+
+  return false;
+}
+
 async function success(pluginConfig, context) {
   if (!isNil(pluginConfig.successCmd) || !isNil(pluginConfig.cmd)) {
     verifyConfig('successCmd', pluginConfig);
@@ -95,4 +116,14 @@ async function fail(pluginConfig, context) {
   }
 }
 
-module.exports = {verifyConditions, analyzeCommits, verifyRelease, generateNotes, prepare, publish, success, fail};
+module.exports = {
+  verifyConditions,
+  analyzeCommits,
+  verifyRelease,
+  generateNotes,
+  prepare,
+  publish,
+  addChannel,
+  success,
+  fail,
+};
