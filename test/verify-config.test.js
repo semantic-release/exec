@@ -1,5 +1,5 @@
-import test from 'ava';
-import verify from '../lib/verify-config';
+const test = require('ava');
+const verify = require('../lib/verify-config');
 
 test('Verify "cmd", "shell" and "execCwd" options', t => {
   t.notThrows(() => verify('verifyConditionsCmd', {verifyConditionsCmd: 'shell cmd'}));

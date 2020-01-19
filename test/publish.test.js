@@ -1,7 +1,7 @@
-import test from 'ava';
-import {stub} from 'sinon';
-import {WritableStreamBuffer} from 'stream-buffers';
-import {publish} from '..';
+const test = require('ava');
+const {stub} = require('sinon');
+const {WritableStreamBuffer} = require('stream-buffers');
+const {publish} = require('..');
 
 test.beforeEach(t => {
   t.context.stdout = new WritableStreamBuffer();
@@ -51,7 +51,7 @@ test('Throw "Error" if the publish script does not returns 0', async t => {
   const pluginConfig = {publishCmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
 
-  await t.throwsAsync(publish(pluginConfig, context), Error);
+  await t.throwsAsync(publish(pluginConfig, context), {instanceOf: Error});
 });
 
 test('Use "cmd" if defined and "publishCmd" is not', async t => {

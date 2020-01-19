@@ -1,8 +1,8 @@
-import path from 'path';
-import test from 'ava';
-import {stub} from 'sinon';
-import {WritableStreamBuffer} from 'stream-buffers';
-import exec from '../lib/exec';
+const path = require('path');
+const test = require('ava');
+const {stub} = require('sinon');
+const {WritableStreamBuffer} = require('stream-buffers');
+const exec = require('../lib/exec');
 
 test.beforeEach(t => {
   t.context.stdout = new WritableStreamBuffer();
@@ -57,7 +57,7 @@ test('Execute the script in "cmd" if no step specific command is passed', async 
   t.is(result, 'run cmd');
 });
 
-test('Exececute the script in cmd from the relative in "execCwd"', async t => {
+test('Exececute the script in cmd = require(the relative in "execCwd"', async t => {
   const pluginConfig = {
     publishCmd: `./fixtures/echo-args.sh $PWD`,
     execCwd: 'test',

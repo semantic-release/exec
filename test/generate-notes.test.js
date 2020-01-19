@@ -1,7 +1,7 @@
-import test from 'ava';
-import {stub} from 'sinon';
-import {WritableStreamBuffer} from 'stream-buffers';
-import {generateNotes} from '..';
+const test = require('ava');
+const {stub} = require('sinon');
+const {WritableStreamBuffer} = require('stream-buffers');
+const {generateNotes} = require('..');
 
 test.beforeEach(t => {
   t.context.stdout = new WritableStreamBuffer();
@@ -24,7 +24,7 @@ test('Throw "Error" if if the generateNotes script does not returns 0', async t 
   const pluginConfig = {generateNotesCmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
-  await t.throwsAsync(generateNotes(pluginConfig, context), Error);
+  await t.throwsAsync(generateNotes(pluginConfig, context), {instanceOf: Error});
 });
 
 test('Use "cmd" if defined and "generateNotesCmd" is not', async t => {

@@ -1,7 +1,7 @@
-import test from 'ava';
-import {stub} from 'sinon';
-import {WritableStreamBuffer} from 'stream-buffers';
-import {success} from '..';
+const test = require('ava');
+const {stub} = require('sinon');
+const {WritableStreamBuffer} = require('stream-buffers');
+const {success} = require('..');
 
 test.beforeEach(t => {
   t.context.stdout = new WritableStreamBuffer();
@@ -23,7 +23,7 @@ test('Throw "Error" if the success script does not returns 0', async t => {
   const pluginConfig = {successCmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
-  await t.throwsAsync(success(pluginConfig, context), Error);
+  await t.throwsAsync(success(pluginConfig, context), {instanceOf: Error});
 });
 
 test('Use "cmd" if defined and "successCmd" is not', async t => {
