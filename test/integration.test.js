@@ -1,5 +1,5 @@
-import test from 'ava';
-import m from '..';
+const test = require('ava');
+const m = require('..');
 
 test('Skip step if neither "cmd" nor step cmd is defined', async t => {
   await t.notThrowsAsync(m.verifyConditions({}, {}));

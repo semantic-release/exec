@@ -1,7 +1,7 @@
-import test from 'ava';
-import {stub} from 'sinon';
-import {WritableStreamBuffer} from 'stream-buffers';
-import {prepare} from '..';
+const test = require('ava');
+const {stub} = require('sinon');
+const {WritableStreamBuffer} = require('stream-buffers');
+const {prepare} = require('..');
 
 test.beforeEach(t => {
   t.context.stdout = new WritableStreamBuffer();
@@ -23,7 +23,7 @@ test('Throw "Error" if the prepare script does not returns 0', async t => {
   const pluginConfig = {prepareCmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
-  await t.throwsAsync(prepare(pluginConfig, context), Error);
+  await t.throwsAsync(prepare(pluginConfig, context), {instanceOf: Error});
 });
 
 test('Use "cmd" if defined and "prepareCmd" is not', async t => {
