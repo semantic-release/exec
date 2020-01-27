@@ -57,7 +57,7 @@ test('Execute the script in "cmd" if no step specific command is passed', async 
   t.is(result, 'run cmd');
 });
 
-test('Exececute the script in cmd = require(the relative in "execCwd"', async t => {
+test('Exececute the script in cmd from the relative in "execCwd"', async t => {
   const pluginConfig = {
     publishCmd: `./fixtures/echo-args.sh $PWD`,
     execCwd: 'test',
