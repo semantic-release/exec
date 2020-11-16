@@ -2,11 +2,7 @@
 
 [**semantic-release**](https://github.com/semantic-release/semantic-release) plugin to execute custom shell commands.
 
-[![Travis](https://img.shields.io/travis/semantic-release/exec.svg)](https://travis-ci.org/semantic-release/exec)
-[![Codecov](https://img.shields.io/codecov/c/github/semantic-release/exec.svg)](https://codecov.io/gh/semantic-release/exec)
-[![Greenkeeper badge](https://badges.greenkeeper.io/semantic-release/exec.svg)](https://greenkeeper.io/)
-
-[![npm latest version](https://img.shields.io/npm/v/@semantic-release/exec/latest.svg)](https://www.npmjs.com/package/@semantic-release/exec)
+[![Build Status](https://github.com/semantic-release/exec/workflows/Test/badge.svg)](https://github.com/semantic-release/exec/actions?query=workflow%3ATest+branch%3Amaster) [![npm latest version](https://img.shields.io/npm/v/@semantic-release/exec/latest.svg)](https://www.npmjs.com/package/@semantic-release/exec)
 [![npm next version](https://img.shields.io/npm/v/@semantic-release/exec/next.svg)](https://www.npmjs.com/package/@semantic-release/exec)
 [![npm beta version](https://img.shields.io/npm/v/@semantic-release/exec/beta.svg)](https://www.npmjs.com/package/@semantic-release/exec)
 
