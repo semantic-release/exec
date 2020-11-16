@@ -21,7 +21,8 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest
-          - windows-latest
+          # tests require a unix system
+          # - windows-latest
 
     runs-on: ${{ matrix.os }}
 
