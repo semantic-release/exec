@@ -22,7 +22,7 @@
     "ava": "3.14.0",
     "nyc": "15.1.0",
     "semantic-release": "17.3.0",
-    "sinon": "9.2.1",
+    "sinon": "9.2.2",
     "stream-buffers": "3.0.2",
     "xo": "0.28.3"
   },
