@@ -40,6 +40,21 @@ test('Generate command with template', async t => {
   t.is(result, 'confValue 1.0.0');
 });
 
+test('Pass env into cmd template', async t => {
+  const pluginConfig = {
+    publishCmd: `./test/fixtures/echo-args.sh \${env.variable}`,
+  };
+  const context = {
+    stdout: t.context.stdout,
+    stderr: t.context.stderr,
+    logger: t.context.logger,
+    env: {variable: 'value'},
+  };
+
+  const result = await exec('publishCmd', pluginConfig, context);
+  t.is(result, 'value');
+});
+
 test('Execute the script with the specified "shell"', async t => {
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
@@ -57,7 +72,7 @@ test('Execute the script in "cmd" if no step specific command is passed', async 
   t.is(result, 'run cmd');
 });
 
-test('Exececute the script in cmd from the relative in "execCwd"', async t => {
+test('Execute the script in cmd from the relative in "execCwd"', async t => {
   const pluginConfig = {
     publishCmd: `./fixtures/echo-args.sh $PWD`,
     execCwd: 'test',
