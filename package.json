@@ -24,7 +24,7 @@
     "semantic-release": "17.4.3",
     "sinon": "10.0.0",
     "stream-buffers": "3.0.2",
-    "xo": "0.28.3"
+    "xo": "0.42.0"
   },
   "engines": {
     "node": ">=10.18"
