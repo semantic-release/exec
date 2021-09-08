@@ -64,7 +64,7 @@ With this example:
 | `shell`               | The shell to use to run the command. See [execa#shell](https://github.com/sindresorhus/execa#shell).                                                                                                                                                                                                                                     |
 | `execCwd`             | The path to use as current working directory when executing the shell commands. This path is relative to the path from which **semantic-release** is running. For example if **semantic-release** runs from `/my-project` and `execCwd` is set to `buildScripts` then the shell command will be executed from `/my-project/buildScripts` |
 
-Each shell command is generated with [Lodash template](https://lodash.com/docs#template). All the objets passed to the [semantic-release plugins](https://github.com/semantic-release/semantic-release#plugins) are available as template options.
+Each shell command is generated with [Lodash template](https://lodash.com/docs#template). All the objects passed to the [semantic-release plugins](https://github.com/semantic-release/semantic-release#plugins) are available as template options.
 
 ## verifyConditionsCmd
 
