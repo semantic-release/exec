@@ -19,7 +19,7 @@
     "parse-json": "^5.0.0"
   },
   "devDependencies": {
-    "ava": "4.0.1",
+    "ava": "4.1.0",
     "nyc": "15.1.0",
     "semantic-release": "19.0.2",
     "sinon": "13.0.1",
