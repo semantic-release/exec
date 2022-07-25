@@ -3,7 +3,7 @@ const {stub} = require('sinon');
 const {WritableStreamBuffer} = require('stream-buffers');
 const {verifyRelease} = require('..');
 
-test.beforeEach(t => {
+test.beforeEach((t) => {
   t.context.stdout = new WritableStreamBuffer();
   t.context.stderr = new WritableStreamBuffer();
   // Mock logger
@@ -12,14 +12,14 @@ test.beforeEach(t => {
   t.context.logger = {log: t.context.log, error: t.context.error};
 });
 
-test('Return if the verifyRelease script returns 0', async t => {
+test('Return if the verifyRelease script returns 0', async (t) => {
   const pluginConfig = {verifyReleaseCmd: 'exit 0'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
 
   await t.notThrowsAsync(verifyRelease(pluginConfig, context));
 });
 
-test('Throw "SemanticReleaseError" if the verifyRelease script does not returns 0', async t => {
+test('Throw "SemanticReleaseError" if the verifyRelease script does not returns 0', async (t) => {
   const pluginConfig = {verifyReleaseCmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
 
@@ -29,14 +29,14 @@ test('Throw "SemanticReleaseError" if the verifyRelease script does not returns 
   t.is(error.code, 'EVERIFYRELEASE');
 });
 
-test('Use "cmd" if defined and "verifyReleaseCmd" is not', async t => {
+test('Use "cmd" if defined and "verifyReleaseCmd" is not', async (t) => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
   await t.notThrowsAsync(verifyRelease(pluginConfig, context));
 });
 
-test('Use "verifyReleaseCmd" even if "cmd" is defined', async t => {
+test('Use "verifyReleaseCmd" even if "cmd" is defined', async (t) => {
   const pluginConfig = {verifyReleaseCmd: './test/fixtures/echo-args.sh', cmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
