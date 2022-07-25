@@ -2,7 +2,7 @@ const path = require('path');
 const test = require('ava');
 const {stub} = require('sinon');
 const {WritableStreamBuffer} = require('stream-buffers');
-const exec = require('../lib/exec');
+const exec = require('../lib/exec.js');
 
 test.beforeEach((t) => {
   t.context.stdout = new WritableStreamBuffer();

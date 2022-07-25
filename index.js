@@ -2,8 +2,8 @@ const {isNil} = require('lodash');
 const parseJson = require('parse-json');
 const debug = require('debug')('semantic-release:exec');
 const SemanticReleaseError = require('@semantic-release/error');
-const exec = require('./lib/exec');
-const verifyConfig = require('./lib/verify-config');
+const exec = require('./lib/exec.js');
+const verifyConfig = require('./lib/verify-config.js');
 
 async function verifyConditions(pluginConfig, context) {
   if (!isNil(pluginConfig.verifyConditionsCmd) || !isNil(pluginConfig.cmd)) {

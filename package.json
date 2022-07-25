@@ -24,7 +24,7 @@
     "semantic-release": "19.0.3",
     "sinon": "14.0.0",
     "stream-buffers": "3.0.2",
-    "xo": "0.32.1"
+    "xo": "0.39.1"
   },
   "engines": {
     "node": ">=14.17"
@@ -82,7 +82,7 @@
     "prettier": true,
     "space": true,
     "rules": {
-      "unicorn/no-reduce": "off",
+      "unicorn/no-array-reduce": "off",
       "unicorn/string-content": "off"
     }
   },
