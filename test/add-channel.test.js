@@ -56,8 +56,7 @@ test('Throw "Error" if the addChannel script does not returns 0', async (t) => {
 
 test('Use "cmd" if defined and "addChannelCmd" is not', async (t) => {
   const pluginConfig = {
-    cmd:
-      './test/fixtures/echo-args.sh {\\"name\\": \\"Release name\\", \\"url\\": \\"https://host.com/release/1.0.0\\"}',
+    cmd: './test/fixtures/echo-args.sh {\\"name\\": \\"Release name\\", \\"url\\": \\"https://host.com/release/1.0.0\\"}',
   };
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
