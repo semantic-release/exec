@@ -3,7 +3,7 @@ const {stub} = require('sinon');
 const {WritableStreamBuffer} = require('stream-buffers');
 const {analyzeCommits} = require('..');
 
-test.beforeEach(t => {
+test.beforeEach((t) => {
   t.context.stdout = new WritableStreamBuffer();
   t.context.stderr = new WritableStreamBuffer();
   // Mock logger
@@ -12,7 +12,7 @@ test.beforeEach(t => {
   t.context.logger = {log: t.context.log, error: t.context.error};
 });
 
-test('Return the value analyzeCommits script wrote to stdout', async t => {
+test('Return the value analyzeCommits script wrote to stdout', async (t) => {
   const pluginConfig = {analyzeCommitsCmd: './test/fixtures/echo-args.sh "minor   "'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
@@ -20,7 +20,7 @@ test('Return the value analyzeCommits script wrote to stdout', async t => {
   t.is(result, 'minor');
 });
 
-test('Return "undefined" if the analyzeCommits script wrtite nothing to stdout', async t => {
+test('Return "undefined" if the analyzeCommits script wrtite nothing to stdout', async (t) => {
   const pluginConfig = {analyzeCommitsCmd: './test/fixtures/echo-args.sh "   "'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
@@ -28,14 +28,14 @@ test('Return "undefined" if the analyzeCommits script wrtite nothing to stdout',
   t.is(result, undefined);
 });
 
-test('Throw Error if if the analyzeCommits script does not returns 0', async t => {
+test('Throw Error if if the analyzeCommits script does not returns 0', async (t) => {
   const pluginConfig = {analyzeCommitsCmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
   await t.throwsAsync(analyzeCommits(pluginConfig, context), {instanceOf: Error});
 });
 
-test('Use "cmd" if defined and "analyzeCommitsCmd" is not', async t => {
+test('Use "cmd" if defined and "analyzeCommitsCmd" is not', async (t) => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh "minor   "'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
@@ -43,7 +43,7 @@ test('Use "cmd" if defined and "analyzeCommitsCmd" is not', async t => {
   t.is(result, 'minor');
 });
 
-test('Use "analyzeCommitsCmd" even if "cmd" is defined', async t => {
+test('Use "analyzeCommitsCmd" even if "cmd" is defined', async (t) => {
   const pluginConfig = {analyzeCommitsCmd: './test/fixtures/echo-args.sh "minor   "', cmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 

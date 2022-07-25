@@ -1,7 +1,7 @@
 const test = require('ava');
 const verify = require('../lib/verify-config');
 
-test('Verify "cmd", "shell" and "execCwd" options', t => {
+test('Verify "cmd", "shell" and "execCwd" options', (t) => {
   t.notThrows(() => verify('verifyConditionsCmd', {verifyConditionsCmd: 'shell cmd'}));
   t.notThrows(() => verify('analyzeCommitsCmd', {analyzeCommitsCmd: 'shell cmd'}));
   t.notThrows(() => verify('verifyReleaseCmd', {verifyReleaseCmd: 'shell cmd'}));
@@ -17,13 +17,13 @@ test('Verify "cmd", "shell" and "execCwd" options', t => {
   t.notThrows(() => verify('verifyConditionsCmd', {cmd: 'shell cmd', shell: 'bash', execCwd: 'scripts'}));
 });
 
-test('Throw SemanticReleaseError if "cmd" option is missing', t => {
+test('Throw SemanticReleaseError if "cmd" option is missing', (t) => {
   const [error] = t.throws(() => verify('verifyConditionsCmd', {}));
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EINVALIDCMD');
 });
 
-test('Throw SemanticReleaseError if "cmd" option is not a String', t => {
+test('Throw SemanticReleaseError if "cmd" option is not a String', (t) => {
   let [error] = t.throws(() => verify('verifyConditionsCmd', {verifyConditionsCmd: 1}));
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EINVALIDCMD');
@@ -61,7 +61,7 @@ test('Throw SemanticReleaseError if "cmd" option is not a String', t => {
   t.is(error.code, 'EINVALIDCMD');
 });
 
-test('Throw SemanticReleaseError if "cmd" option is an empty String', t => {
+test('Throw SemanticReleaseError if "cmd" option is an empty String', (t) => {
   let [error] = t.throws(() => verify('verifyConditionsCmd', {verifyConditionsCmd: '    '}));
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EINVALIDCMD');
@@ -99,31 +99,31 @@ test('Throw SemanticReleaseError if "cmd" option is an empty String', t => {
   t.is(error.code, 'EINVALIDCMD');
 });
 
-test('Throw SemanticReleaseError if "shell" option is not a String or "true"', t => {
+test('Throw SemanticReleaseError if "shell" option is not a String or "true"', (t) => {
   const [error] = t.throws(() => verify('verifyConditionsCmd', {shell: false}));
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EINVALIDSHELL');
 });
 
-test('Throw SemanticReleaseError if "shell" option is an empty String', t => {
+test('Throw SemanticReleaseError if "shell" option is an empty String', (t) => {
   const [error] = t.throws(() => verify('verifyConditionsCmd', {shell: '    '}));
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EINVALIDSHELL');
 });
 
-test('Throw SemanticReleaseError if "execCwd" option is not a String', t => {
+test('Throw SemanticReleaseError if "execCwd" option is not a String', (t) => {
   const [error] = t.throws(() => verify('verifyConditionsCmd', {execCwd: 1}));
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EINVALIDEXECCWD');
 });
 
-test('Throw SemanticReleaseError if "execCwd" option is an empty String', t => {
+test('Throw SemanticReleaseError if "execCwd" option is an empty String', (t) => {
   const [error] = t.throws(() => verify('verifyConditionsCmd', {execCwd: '    '}));
   t.is(error.name, 'SemanticReleaseError');
   t.is(error.code, 'EINVALIDEXECCWD');
 });
 
-test('Return SemanticReleaseError Array if multiple config are invalid', t => {
+test('Return SemanticReleaseError Array if multiple config are invalid', (t) => {
   const [error1, error2] = t.throws(() => verify('verifyConditionsCmd', {verifyConditionsCmd: 1, shell: false}));
 
   t.is(error1.name, 'SemanticReleaseError');

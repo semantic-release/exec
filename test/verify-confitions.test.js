@@ -3,7 +3,7 @@ const {stub} = require('sinon');
 const {WritableStreamBuffer} = require('stream-buffers');
 const {verifyConditions} = require('..');
 
-test.beforeEach(t => {
+test.beforeEach((t) => {
   t.context.stdout = new WritableStreamBuffer();
   t.context.stderr = new WritableStreamBuffer();
   // Mock logger
@@ -12,14 +12,14 @@ test.beforeEach(t => {
   t.context.logger = {log: t.context.log, error: t.context.error};
 });
 
-test('Return if the verifyConditions script returns 0', async t => {
+test('Return if the verifyConditions script returns 0', async (t) => {
   const pluginConfig = {verifyConditionsCmd: 'exit 0'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
 
   await t.notThrowsAsync(verifyConditions(pluginConfig, context));
 });
 
-test('Throw "SemanticReleaseError" if the verifyConditions script does not returns 0', async t => {
+test('Throw "SemanticReleaseError" if the verifyConditions script does not returns 0', async (t) => {
   const pluginConfig = {verifyConditionsCmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
 
@@ -29,14 +29,14 @@ test('Throw "SemanticReleaseError" if the verifyConditions script does not retur
   t.is(error.code, 'EVERIFYCONDITIONS');
 });
 
-test('Use "cmd" if defined and "verifyConditionsCmd" is not', async t => {
+test('Use "cmd" if defined and "verifyConditionsCmd" is not', async (t) => {
   const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 
   await t.notThrowsAsync(verifyConditions(pluginConfig, context));
 });
 
-test('Use "verifyConditionsCmd" even if "cmd" is defined', async t => {
+test('Use "verifyConditionsCmd" even if "cmd" is defined', async (t) => {
   const pluginConfig = {verifyConditionsCmd: './test/fixtures/echo-args.sh', cmd: 'exit 1'};
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
 

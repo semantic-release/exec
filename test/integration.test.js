@@ -1,7 +1,7 @@
 const test = require('ava');
 const m = require('..');
 
-test('Skip step if neither "cmd" nor step cmd is defined', async t => {
+test('Skip step if neither "cmd" nor step cmd is defined', async (t) => {
   await t.notThrowsAsync(m.verifyConditions({}, {}));
   await t.notThrowsAsync(m.analyzeCommits({}, {}));
   await t.notThrowsAsync(m.verifyRelease({}, {}));

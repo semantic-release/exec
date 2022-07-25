@@ -68,8 +68,9 @@ async function publish(pluginConfig, context) {
       debug(error);
 
       debug(
-        `The command ${pluginConfig.publishCmd ||
-          pluginConfig.cmd} wrote invalid JSON to stdout. The stdout content will be ignored.`
+        `The command ${
+          pluginConfig.publishCmd || pluginConfig.cmd
+        } wrote invalid JSON to stdout. The stdout content will be ignored.`
       );
     }
 
