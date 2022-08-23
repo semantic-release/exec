@@ -21,7 +21,7 @@
   "devDependencies": {
     "ava": "4.3.1",
     "nyc": "15.1.0",
-    "semantic-release": "19.0.4",
+    "semantic-release": "19.0.5",
     "sinon": "14.0.0",
     "stream-buffers": "3.0.2",
     "xo": "0.39.1"
