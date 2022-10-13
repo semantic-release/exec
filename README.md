@@ -34,7 +34,7 @@ The plugin can be configured in the [**semantic-release** configuration file](ht
     "@semantic-release/release-notes-generator",
     ["@semantic-release/exec", {
       "verifyConditionsCmd": "./verify.sh",
-      "publishCmd": "./publish.sh ${nextRelease.version} ${options.branch} ${commits.length} ${Date.now()}"
+      "publishCmd": "./publish.sh ${nextRelease.version} ${branch.name} ${commits.length} ${Date.now()}"
     }],
   ]
 }
