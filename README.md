@@ -139,3 +139,4 @@ Execute a shell command to verify if the release should happen.
 | `exit code`      | Any non `0` code is considered as an unexpected error and will stop the `semantic-release` execution with an error. |
 | `stdout`         | Can be used for logging.                                                                                            |
 | `stderr`         | Can be used for logging.                                                                                            |
+UPDATE BY ME
