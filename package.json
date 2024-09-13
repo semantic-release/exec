@@ -23,7 +23,7 @@
     "nyc": "15.1.0",
     "semantic-release": "21.1.2",
     "sinon": "17.0.1",
-    "stream-buffers": "3.0.2",
+    "stream-buffers": "3.0.3",
     "xo": "0.39.1"
   },
   "engines": {
