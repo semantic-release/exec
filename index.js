@@ -1,9 +1,11 @@
 import { isNil } from 'lodash-es';
 import parseJson from 'parse-json';
-const debug = require('debug')('semantic-release:exec');
+import debugFactory from 'debug';
 import SemanticReleaseError from '@semantic-release/error';
 import exec from './lib/exec.js';
 import verifyConfig from './lib/verify-config.js';
+
+const debug = debugFactory('semantic-release:exec');
 
 export async function verifyConditions(pluginConfig, context) {
   if (!isNil(pluginConfig.verifyConditionsCmd) || !isNil(pluginConfig.cmd)) {
