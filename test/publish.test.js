@@ -1,7 +1,7 @@
-const test = require('ava');
-const {stub} = require('sinon');
-const {WritableStreamBuffer} = require('stream-buffers');
-const {publish} = require('..');
+import test from 'ava';
+import { stub } from 'sinon';
+import { WritableStreamBuffer } from 'stream-buffers';
+import { publish } from '..';
 
 test.beforeEach((t) => {
   t.context.stdout = new WritableStreamBuffer();

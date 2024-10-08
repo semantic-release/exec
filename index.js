@@ -1,11 +1,11 @@
-const {isNil} = require('lodash');
-const parseJson = require('parse-json');
+import { isNil } from 'lodash';
+import parseJson from 'parse-json';
 const debug = require('debug')('semantic-release:exec');
-const SemanticReleaseError = require('@semantic-release/error');
-const exec = require('./lib/exec.js');
-const verifyConfig = require('./lib/verify-config.js');
+import SemanticReleaseError from '@semantic-release/error';
+import exec from './lib/exec.js';
+import verifyConfig from './lib/verify-config.js';
 
-async function verifyConditions(pluginConfig, context) {
+export async function verifyConditions(pluginConfig, context) {
   if (!isNil(pluginConfig.verifyConditionsCmd) || !isNil(pluginConfig.cmd)) {
     verifyConfig('verifyConditionsCmd', pluginConfig);
 
@@ -17,7 +17,7 @@ async function verifyConditions(pluginConfig, context) {
   }
 }
 
-async function analyzeCommits(pluginConfig, context) {
+export async function analyzeCommits(pluginConfig, context) {
   if (!isNil(pluginConfig.analyzeCommitsCmd) || !isNil(pluginConfig.cmd)) {
     verifyConfig('analyzeCommitsCmd', pluginConfig);
 
@@ -26,7 +26,7 @@ async function analyzeCommits(pluginConfig, context) {
   }
 }
 
-async function verifyRelease(pluginConfig, context) {
+export async function verifyRelease(pluginConfig, context) {
   if (!isNil(pluginConfig.verifyReleaseCmd) || !isNil(pluginConfig.cmd)) {
     verifyConfig('verifyReleaseCmd', pluginConfig);
 
@@ -38,7 +38,7 @@ async function verifyRelease(pluginConfig, context) {
   }
 }
 
-async function generateNotes(pluginConfig, context) {
+export async function generateNotes(pluginConfig, context) {
   if (!isNil(pluginConfig.generateNotesCmd) || !isNil(pluginConfig.cmd)) {
     verifyConfig('generateNotesCmd', pluginConfig);
 
@@ -47,7 +47,7 @@ async function generateNotes(pluginConfig, context) {
   }
 }
 
-async function prepare(pluginConfig, context) {
+export async function prepare(pluginConfig, context) {
   if (!isNil(pluginConfig.prepareCmd) || !isNil(pluginConfig.cmd)) {
     verifyConfig('prepareCmd', pluginConfig);
 
@@ -55,7 +55,7 @@ async function prepare(pluginConfig, context) {
   }
 }
 
-async function publish(pluginConfig, context) {
+export async function publish(pluginConfig, context) {
   if (!isNil(pluginConfig.publishCmd) || !isNil(pluginConfig.cmd)) {
     verifyConfig('publishCmd', pluginConfig);
 
@@ -80,7 +80,7 @@ async function publish(pluginConfig, context) {
   return false;
 }
 
-async function addChannel(pluginConfig, context) {
+export async function addChannel(pluginConfig, context) {
   if (!isNil(pluginConfig.addChannelCmd) || !isNil(pluginConfig.cmd)) {
     verifyConfig('addChannelCmd', pluginConfig);
 
@@ -101,7 +101,7 @@ async function addChannel(pluginConfig, context) {
   return false;
 }
 
-async function success(pluginConfig, context) {
+export async function success(pluginConfig, context) {
   if (!isNil(pluginConfig.successCmd) || !isNil(pluginConfig.cmd)) {
     verifyConfig('successCmd', pluginConfig);
 
@@ -109,22 +109,10 @@ async function success(pluginConfig, context) {
   }
 }
 
-async function fail(pluginConfig, context) {
+export async function fail(pluginConfig, context) {
   if (!isNil(pluginConfig.failCmd) || !isNil(pluginConfig.cmd)) {
     verifyConfig('failCmd', pluginConfig);
 
     await exec('failCmd', pluginConfig, context);
   }
 }
-
-module.exports = {
-  verifyConditions,
-  analyzeCommits,
-  verifyRelease,
-  generateNotes,
-  prepare,
-  publish,
-  addChannel,
-  success,
-  fail,
-};

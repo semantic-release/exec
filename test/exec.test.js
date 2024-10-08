@@ -1,8 +1,8 @@
-const path = require('path');
-const test = require('ava');
-const {stub} = require('sinon');
-const {WritableStreamBuffer} = require('stream-buffers');
-const exec = require('../lib/exec.js');
+import { resolve } from 'path';
+import test from 'ava';
+import { stub } from 'sinon';
+import { WritableStreamBuffer } from 'stream-buffers';
+import exec from '../lib/exec.js';
 
 test.beforeEach((t) => {
   t.context.stdout = new WritableStreamBuffer();
@@ -65,5 +65,5 @@ test('Exececute the script in cmd from the relative in "execCwd"', async (t) => 
   const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, cwd: process.cwd()};
 
   const result = await exec('publishCmd', pluginConfig, context);
-  t.is(result, path.resolve(process.cwd(), 'test'));
+  t.is(result, resolve(process.cwd(), 'test'));
 });
