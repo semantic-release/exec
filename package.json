@@ -33,7 +33,7 @@
     "lib",
     "index.js"
   ],
-  "homepage": "https://github.com/semantic-release/exec#readme",
+  "homepage": "https://github.com/semantic-release/exec",
   "keywords": [
     "cli",
     "publish",
