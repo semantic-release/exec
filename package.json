@@ -2,6 +2,7 @@
   "name": "@semantic-release/exec",
   "description": "semantic-release plugin to run custom shell commands",
   "version": "0.0.0-development",
+  "type": "module",
   "author": "Pierre Vanduynslager (https://github.com/pvdlg)",
   "bugs": {
     "url": "https://github.com/semantic-release/exec/issues"
