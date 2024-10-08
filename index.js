@@ -1,4 +1,4 @@
-import { isNil } from 'lodash';
+import { isNil } from 'lodash-es';
 import parseJson from 'parse-json';
 const debug = require('debug')('semantic-release:exec');
 import SemanticReleaseError from '@semantic-release/error';
