@@ -9,7 +9,11 @@ test.beforeEach((t) => {
   // Mock logger
   t.context.log = stub();
   t.context.error = stub();
-  t.context.logger = { log: t.context.log, error: t.context.error };
+  t.context.logger = {
+    log: t.context.log,
+    error: t.context.error,
+    warn: t.context.warn,
+  };
 });
 
 test("Parse JSON returned by addChannel script", async (t) => {

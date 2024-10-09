@@ -59,7 +59,7 @@
     "all": true
   },
   "peerDependencies": {
-    "semantic-release": ">=18.0.0"
+    "semantic-release": ">=24.1.2"
   },
   "publishConfig": {
     "access": "public",
