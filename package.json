@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "ava": "5.1.0",
-    "nyc": "15.1.0",
+    "c8": "^10.1.2",
     "semantic-release": "^24.1.2",
     "sinon": "17.0.1",
     "stream-buffers": "3.0.2"
@@ -46,18 +46,6 @@
   ],
   "license": "MIT",
   "exports": "./index.js",
-  "nyc": {
-    "include": [
-      "lib/**/*.js",
-      "index.js"
-    ],
-    "reporter": [
-      "json",
-      "text",
-      "html"
-    ],
-    "all": true
-  },
   "peerDependencies": {
     "semantic-release": ">=24.1.2"
   },
@@ -73,8 +61,7 @@
     "lint": "prettier --check \"{lib,test}/**/*.{js,json,ts}\" \"*.{js,md,json}\" \".github/**/*.yml\"",
     "lint:fix": "prettier --write \"{lib,test}/**/*.{js,json,ts}\" \"*.{js,md,json}\" \".github/**/*.yml\"",
     "semantic-release": "semantic-release",
-    "test": "nyc ava -v",
-    "test:ci": "nyc ava -v"
+    "test": "c8 ava -v"
   },
   "renovate": {
     "extends": [
