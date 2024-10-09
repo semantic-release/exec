@@ -1,5 +1,15 @@
-import test from 'ava';
-import { verifyConditions, analyzeCommits, verifyRelease, generateNotes, prepare, publish, addChannel, success, fail } from '../index.js';
+import test from "ava";
+import {
+  verifyConditions,
+  analyzeCommits,
+  verifyRelease,
+  generateNotes,
+  prepare,
+  publish,
+  addChannel,
+  success,
+  fail,
+} from "../index.js";
 
 test('Skip step if neither "cmd" nor step cmd is defined', async (t) => {
   await t.notThrowsAsync(verifyConditions({}, {}));

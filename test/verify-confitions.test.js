@@ -1,7 +1,7 @@
-import test from 'ava';
-import { stub } from 'sinon';
-import { WritableStreamBuffer } from 'stream-buffers';
-import { verifyConditions } from '../index.js';
+import test from "ava";
+import { stub } from "sinon";
+import { WritableStreamBuffer } from "stream-buffers";
+import { verifyConditions } from "../index.js";
 
 test.beforeEach((t) => {
   t.context.stdout = new WritableStreamBuffer();
@@ -9,36 +9,57 @@ test.beforeEach((t) => {
   // Mock logger
   t.context.log = stub();
   t.context.error = stub();
-  t.context.logger = {log: t.context.log, error: t.context.error};
+  t.context.logger = { log: t.context.log, error: t.context.error };
 });
 
-test('Return if the verifyConditions script returns 0', async (t) => {
-  const pluginConfig = {verifyConditionsCmd: 'exit 0'};
-  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
+test("Return if the verifyConditions script returns 0", async (t) => {
+  const pluginConfig = { verifyConditionsCmd: "exit 0" };
+  const context = {
+    stdout: t.context.stdout,
+    stderr: t.context.stderr,
+    logger: t.context.logger,
+    options: {},
+  };
 
   await t.notThrowsAsync(verifyConditions(pluginConfig, context));
 });
 
 test('Throw "SemanticReleaseError" if the verifyConditions script does not returns 0', async (t) => {
-  const pluginConfig = {verifyConditionsCmd: 'exit 1'};
-  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger, options: {}};
+  const pluginConfig = { verifyConditionsCmd: "exit 1" };
+  const context = {
+    stdout: t.context.stdout,
+    stderr: t.context.stderr,
+    logger: t.context.logger,
+    options: {},
+  };
 
   const error = await t.throwsAsync(verifyConditions(pluginConfig, context));
 
-  t.is(error.name, 'SemanticReleaseError');
-  t.is(error.code, 'EVERIFYCONDITIONS');
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EVERIFYCONDITIONS");
 });
 
 test('Use "cmd" if defined and "verifyConditionsCmd" is not', async (t) => {
-  const pluginConfig = {cmd: './test/fixtures/echo-args.sh'};
-  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
+  const pluginConfig = { cmd: "./test/fixtures/echo-args.sh" };
+  const context = {
+    stdout: t.context.stdout,
+    stderr: t.context.stderr,
+    logger: t.context.logger,
+  };
 
   await t.notThrowsAsync(verifyConditions(pluginConfig, context));
 });
 
 test('Use "verifyConditionsCmd" even if "cmd" is defined', async (t) => {
-  const pluginConfig = {verifyConditionsCmd: './test/fixtures/echo-args.sh', cmd: 'exit 1'};
-  const context = {stdout: t.context.stdout, stderr: t.context.stderr, logger: t.context.logger};
+  const pluginConfig = {
+    verifyConditionsCmd: "./test/fixtures/echo-args.sh",
+    cmd: "exit 1",
+  };
+  const context = {
+    stdout: t.context.stdout,
+    stderr: t.context.stderr,
+    logger: t.context.logger,
+  };
 
   await t.notThrowsAsync(verifyConditions(pluginConfig, context));
 });
