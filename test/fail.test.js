@@ -1,7 +1,7 @@
 import test from 'ava';
 import { stub } from 'sinon';
 import { WritableStreamBuffer } from 'stream-buffers';
-import { fail } from '..';
+import { fail } from '../index.js';
 
 test.beforeEach((t) => {
   t.context.stdout = new WritableStreamBuffer();
