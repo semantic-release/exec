@@ -17,15 +17,15 @@
     "debug": "^4.0.0",
     "execa": "^5.0.0",
     "lodash-es": "^4.17.21",
-    "parse-json": "^5.0.0"
+    "parse-json": "^5.0.0",
+    "prettier": "^3.3.3"
   },
   "devDependencies": {
     "ava": "5.1.0",
     "nyc": "15.1.0",
     "semantic-release": "21.1.2",
     "sinon": "17.0.1",
-    "stream-buffers": "3.0.2",
-    "xo": "0.39.1"
+    "stream-buffers": "3.0.2"
   },
   "engines": {
     "node": ">=14.17"
@@ -61,10 +61,6 @@
   "peerDependencies": {
     "semantic-release": ">=18.0.0"
   },
-  "prettier": {
-    "printWidth": 120,
-    "trailingComma": "es5"
-  },
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -74,19 +70,11 @@
     "url": "https://github.com/semantic-release/exec.git"
   },
   "scripts": {
-    "lint": "xo",
-    "pretest": "npm run lint",
+    "lint": "prettier --check \"{lib,test}/**/*.{js,json,ts}\" \"*.{js,md,json}\" \".github/**/*.yml\"",
+    "lint:fix": "prettier --write \"{lib,test}/**/*.{js,json,ts}\" \"*.{js,md,json}\" \".github/**/*.yml\"",
     "semantic-release": "semantic-release",
     "test": "nyc ava -v",
     "test:ci": "nyc ava -v"
-  },
-  "xo": {
-    "prettier": true,
-    "space": true,
-    "rules": {
-      "unicorn/no-array-reduce": "off",
-      "unicorn/string-content": "off"
-    }
   },
   "renovate": {
     "extends": [
