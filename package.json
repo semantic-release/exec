@@ -47,7 +47,7 @@
   "license": "MIT",
   "exports": "./index.js",
   "peerDependencies": {
-    "semantic-release": ">=24.1.2"
+    "semantic-release": ">=24.1.0"
   },
   "publishConfig": {
     "access": "public",
