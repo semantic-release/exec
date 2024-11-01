@@ -17,7 +17,7 @@
     "debug": "^4.0.0",
     "execa": "^5.0.0",
     "lodash-es": "^4.17.21",
-    "parse-json": "^5.0.0",
+    "parse-json": "^5.0.0"
   },
   "devDependencies": {
     "ava": "5.1.0",
@@ -46,6 +46,7 @@
   ],
   "license": "MIT",
   "exports": "./index.js",
+  "main": "index.js",
   "peerDependencies": {
     "semantic-release": ">=24.1.0"
   },
