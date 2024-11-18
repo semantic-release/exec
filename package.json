@@ -2,6 +2,7 @@
   "name": "@semantic-release/exec",
   "description": "semantic-release plugin to run custom shell commands",
   "version": "0.0.0-development",
+  "type": "module",
   "author": "Pierre Vanduynslager (https://github.com/pvdlg)",
   "bugs": {
     "url": "https://github.com/semantic-release/exec/issues"
@@ -15,25 +16,25 @@
     "aggregate-error": "^3.0.0",
     "debug": "^4.0.0",
     "execa": "^5.0.0",
-    "lodash": "^4.17.4",
+    "lodash-es": "^4.17.21",
     "parse-json": "^5.0.0"
   },
   "devDependencies": {
     "ava": "5.1.0",
-    "nyc": "15.1.0",
-    "semantic-release": "21.1.2",
+    "c8": "10.1.2",
+    "prettier": "3.3.3",
+    "semantic-release": "24.1.2",
     "sinon": "17.0.1",
-    "stream-buffers": "3.0.2",
-    "xo": "0.39.1"
+    "stream-buffers": "3.0.2"
   },
   "engines": {
-    "node": ">=14.17"
+    "node": ">=20.8.1"
   },
   "files": [
     "lib",
     "index.js"
   ],
-  "homepage": "https://github.com/semantic-release/exec#readme",
+  "homepage": "https://github.com/semantic-release/exec",
   "keywords": [
     "cli",
     "publish",
@@ -44,25 +45,10 @@
     "version"
   ],
   "license": "MIT",
+  "exports": "./index.js",
   "main": "index.js",
-  "nyc": {
-    "include": [
-      "lib/**/*.js",
-      "index.js"
-    ],
-    "reporter": [
-      "json",
-      "text",
-      "html"
-    ],
-    "all": true
-  },
   "peerDependencies": {
-    "semantic-release": ">=18.0.0"
-  },
-  "prettier": {
-    "printWidth": 120,
-    "trailingComma": "es5"
+    "semantic-release": ">=24.1.0"
   },
   "publishConfig": {
     "access": "public",
@@ -73,19 +59,10 @@
     "url": "https://github.com/semantic-release/exec.git"
   },
   "scripts": {
-    "lint": "xo",
-    "pretest": "npm run lint",
+    "lint": "prettier --check \"{lib,test}/**/*.{js,json,ts}\" \"*.{js,md,json}\" \".github/**/*.yml\"",
+    "lint:fix": "prettier --write \"{lib,test}/**/*.{js,json,ts}\" \"*.{js,md,json}\" \".github/**/*.yml\"",
     "semantic-release": "semantic-release",
-    "test": "nyc ava -v",
-    "test:ci": "nyc ava -v"
-  },
-  "xo": {
-    "prettier": true,
-    "space": true,
-    "rules": {
-      "unicorn/no-array-reduce": "off",
-      "unicorn/string-content": "off"
-    }
+    "test": "c8 ava -v"
   },
   "renovate": {
     "extends": [
