@@ -21,7 +21,7 @@
   "devDependencies": {
     "ava": "5.1.0",
     "nyc": "15.1.0",
-    "semantic-release": "21.1.2",
+    "semantic-release": "^24.2.0",
     "sinon": "17.0.1",
     "stream-buffers": "3.0.2",
     "xo": "0.39.1"
@@ -56,9 +56,6 @@
       "html"
     ],
     "all": true
-  },
-  "peerDependencies": {
-    "semantic-release": ">=18.0.0"
   },
   "prettier": {
     "printWidth": 120,
