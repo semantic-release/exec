@@ -7,6 +7,12 @@ import verifyConfig from "./lib/verify-config.js";
 
 const debug = debugFactory("semantic-release:exec");
 
+function execErrorMessage(error) {
+  return error.stdout && error.stdout.trim.length > 0
+    ? error.stdout
+    : `${error.name}: ${error.message}`;
+}
+
 export async function verifyConditions(pluginConfig, context) {
   if (!isNil(pluginConfig.verifyConditionsCmd) || !isNil(pluginConfig.cmd)) {
     verifyConfig("verifyConditionsCmd", pluginConfig);
@@ -14,7 +20,8 @@ export async function verifyConditions(pluginConfig, context) {
     try {
       await exec("verifyConditionsCmd", pluginConfig, context);
     } catch (error) {
-      throw new SemanticReleaseError(error.stdout, "EVERIFYCONDITIONS");
+      const message = execErrorMessage(error);
+      throw new SemanticReleaseError(message, "EVERIFYCONDITIONS");
     }
   }
 }
@@ -35,7 +42,8 @@ export async function verifyRelease(pluginConfig, context) {
     try {
       await exec("verifyReleaseCmd", pluginConfig, context);
     } catch (error) {
-      throw new SemanticReleaseError(error.stdout, "EVERIFYRELEASE");
+      const message = execErrorMessage(error);
+      throw new SemanticReleaseError(message, "EVERIFYRELEASE");
     }
   }
 }
