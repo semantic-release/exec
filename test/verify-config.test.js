@@ -23,6 +23,91 @@ test('Verify "cmd", "shell" and "execCwd" options', (t) => {
 
   t.notThrows(() =>
     verify("verifyConditionsCmd", {
+      verifyConditionsCmd: { cmd: "shell cmd", env: { var: "value" } },
+    }),
+  );
+  t.notThrows(() =>
+    verify("analyzeCommitsCmd", {
+      analyzeCommitsCmd: { cmd: "shell cmd", env: { var: "value" } },
+    }),
+  );
+  t.notThrows(() =>
+    verify("verifyReleaseCmd", {
+      verifyReleaseCmd: { cmd: "shell cmd", env: { var: "value" } },
+    }),
+  );
+  t.notThrows(() =>
+    verify("generateNotesCmd", {
+      generateNotesCmd: { cmd: "shell cmd", env: { var: "value" } },
+    }),
+  );
+  t.notThrows(() =>
+    verify("prepareCmd", {
+      prepareCmd: { cmd: "shell cmd", env: { var: "value" } },
+    }),
+  );
+  t.notThrows(() =>
+    verify("publishCmd", {
+      publishCmd: { cmd: "shell cmd", env: { var: "value" } },
+    }),
+  );
+  t.notThrows(() =>
+    verify("successCmd", {
+      successCmd: { cmd: "shell cmd", env: { var: "value" } },
+    }),
+  );
+  t.notThrows(() =>
+    verify("failCmd", { failCmd: { cmd: "shell cmd", env: { var: "value" } } }),
+  );
+
+  t.notThrows(() =>
+    verify("verifyConditionsCmd", {
+      cmd: { cmd: "shell cmd", env: { var: "value" } },
+    }),
+  );
+
+  t.notThrows(() =>
+    verify("verifyConditionsCmd", {
+      cmd: "shell cmd",
+      shell: true,
+      execCwd: "scripts",
+    }),
+  );
+  t.notThrows(() =>
+    verify("verifyConditionsCmd", {
+      cmd: "shell cmd",
+      shell: "bash",
+      execCwd: "scripts",
+    }),
+  );
+});
+
+test('Verify "cmd" options with missing env', (t) => {
+  t.notThrows(() =>
+    verify("verifyConditionsCmd", {
+      verifyConditionsCmd: { cmd: "shell cmd" },
+    }),
+  );
+  t.notThrows(() =>
+    verify("analyzeCommitsCmd", { analyzeCommitsCmd: { cmd: "shell cmd" } }),
+  );
+  t.notThrows(() =>
+    verify("verifyReleaseCmd", { verifyReleaseCmd: { cmd: "shell cmd" } }),
+  );
+  t.notThrows(() =>
+    verify("generateNotesCmd", { generateNotesCmd: { cmd: "shell cmd" } }),
+  );
+  t.notThrows(() => verify("prepareCmd", { prepareCmd: { cmd: "shell cmd" } }));
+  t.notThrows(() => verify("publishCmd", { publishCmd: { cmd: "shell cmd" } }));
+  t.notThrows(() => verify("successCmd", { successCmd: { cmd: "shell cmd" } }));
+  t.notThrows(() => verify("failCmd", { failCmd: { cmd: "shell cmd" } }));
+
+  t.notThrows(() =>
+    verify("verifyConditionsCmd", { cmd: { cmd: "shell cmd" } }),
+  );
+
+  t.notThrows(() =>
+    verify("verifyConditionsCmd", {
       cmd: "shell cmd",
       shell: true,
       execCwd: "scripts",
@@ -83,6 +168,50 @@ test('Throw SemanticReleaseError if "cmd" option is not a String', (t) => {
   [error] = t.throws(() => verify("verifyConditionsCmd", { cmd: 1 }));
   t.is(error.name, "SemanticReleaseError");
   t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() => verify("verifyConditionsCmd", { cmd: { cmd: 1 } }));
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("verifyConditionsCmd", { verifyConditionsCmd: { cmd: 1 } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("analyzeCommitsCmd", { analyzeCommitsCmd: { cmd: 1 } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("verifyReleaseCmd", { verifyReleaseCmd: { cmd: 1 } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("generateNotesCmd", { generateNotesCmd: { cmd: 1 } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() => verify("prepareCmd", { prepareCmd: { cmd: 1 } }));
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() => verify("publishCmd", { publishCmd: { cmd: 1 } }));
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() => verify("successCmd", { successCmd: { cmd: 1 } }));
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() => verify("failCmd", { failCmd: { cmd: 1 } }));
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
 });
 
 test('Throw SemanticReleaseError if "cmd" option is an empty String', (t) => {
@@ -127,6 +256,194 @@ test('Throw SemanticReleaseError if "cmd" option is an empty String', (t) => {
   t.is(error.code, "EINVALIDCMD");
 
   [error] = t.throws(() => verify("verifyConditionsCmd", { cmd: "    " }));
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("verifyConditionsCmd", { verifyConditionsCmd: { cmd: "    " } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("analyzeCommitsCmd", { analyzeCommitsCmd: { cmd: "    " } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("verifyReleaseCmd", { verifyReleaseCmd: { cmd: "    " } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("generateNotesCmd", { generateNotesCmd: { cmd: "    " } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("prepareCmd", { prepareCmd: { cmd: "    " } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("publishCmd", { publishCmd: { cmd: "    " } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("successCmd", { successCmd: { cmd: "    " } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() => verify("failCmd", { failCmd: { cmd: "    " } }));
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("verifyConditionsCmd", { cmd: { cmd: "    " } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+});
+
+test('Throw SemanticReleaseError if "cmd" option has an invalid env', (t) => {
+  let [error] = t.throws(() =>
+    verify("verifyConditionsCmd", {
+      verifyConditionsCmd: { cmd: "shell cmd", env: 1 },
+    }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("analyzeCommitsCmd", {
+      analyzeCommitsCmd: { cmd: "shell cmd", env: 1 },
+    }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("verifyReleaseCmd", {
+      verifyReleaseCmd: { cmd: "shell cmd", env: 1 },
+    }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("generateNotesCmd", {
+      generateNotesCmd: { cmd: "shell cmd", env: 1 },
+    }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("prepareCmd", { prepareCmd: { cmd: "shell cmd", env: 1 } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("publishCmd", { publishCmd: { cmd: "shell cmd", env: 1 } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("successCmd", { successCmd: { cmd: "shell cmd", env: 1 } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("failCmd", { failCmd: { cmd: "shell cmd", env: 1 } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("verifyConditionsCmd", { cmd: { cmd: "shell cmd", env: 1 } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+});
+
+test('Throw SemanticReleaseError if "cmd" option has an non string envs', (t) => {
+  let [error] = t.throws(() =>
+    verify("verifyConditionsCmd", {
+      verifyConditionsCmd: { cmd: "shell cmd", env: { invalid: 1 } },
+    }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("analyzeCommitsCmd", {
+      analyzeCommitsCmd: { cmd: "shell cmd", env: { invalid: 1 } },
+    }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("verifyReleaseCmd", {
+      verifyReleaseCmd: { cmd: "shell cmd", env: { invalid: 1 } },
+    }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("generateNotesCmd", {
+      generateNotesCmd: { cmd: "shell cmd", env: { invalid: 1 } },
+    }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("prepareCmd", {
+      prepareCmd: { cmd: "shell cmd", env: { invalid: 1 } },
+    }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("publishCmd", {
+      publishCmd: { cmd: "shell cmd", env: { invalid: 1 } },
+    }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("successCmd", {
+      successCmd: { cmd: "shell cmd", env: { invalid: 1 } },
+    }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("failCmd", { failCmd: { cmd: "shell cmd", env: { invalid: 1 } } }),
+  );
+  t.is(error.name, "SemanticReleaseError");
+  t.is(error.code, "EINVALIDCMD");
+
+  [error] = t.throws(() =>
+    verify("verifyConditionsCmd", {
+      cmd: { cmd: "shell cmd", env: { invalid: 1 } },
+    }),
+  );
   t.is(error.name, "SemanticReleaseError");
   t.is(error.code, "EINVALIDCMD");
 });

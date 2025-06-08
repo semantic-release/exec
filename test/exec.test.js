@@ -51,6 +51,28 @@ test("Generate command with template", async (t) => {
   t.is(result, "confValue 1.0.0");
 });
 
+test("Generate command with env variables", async (t) => {
+  const pluginConfig = {
+    publishCmd: {
+      cmd: `./test/fixtures/echo-args.sh \${config.conf} \${lastRelease.version}`,
+      env: {
+        NEXT_RELEASE_NOTES: "${nextRelease.notes}",
+      },
+    },
+    conf: "confValue",
+  };
+  const context = {
+    stdout: t.context.stdout,
+    stderr: t.context.stderr,
+    lastRelease: { version: "1.0.0" },
+    nextRelease: { notes: "notes &\"'" },
+    logger: t.context.logger,
+  };
+
+  const result = await exec("publishCmd", pluginConfig, context);
+  t.is(result, "confValue 1.0.0 notes &\"'");
+});
+
 test('Execute the script with the specified "shell"', async (t) => {
   const context = {
     stdout: t.context.stdout,
