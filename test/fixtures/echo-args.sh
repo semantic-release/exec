@@ -1,2 +1,2 @@
 #!/bin/bash 
-echo "$@"
+echo "$@" "$NEXT_RELEASE_NOTES"
