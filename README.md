@@ -36,6 +36,12 @@ The plugin can be configured in the [**semantic-release** configuration file](ht
       "@semantic-release/exec",
       {
         "verifyConditionsCmd": "./verify.sh",
+        "prepareCmd": {
+          "cmd": "./prepare.sh ${nextRelease.version} ${nextRelease.gitTag}",
+          "env": {
+            "NEXT_RELEASE_NOTES": "${nextRelease.notes}"
+          }
+        },
         "publishCmd": "./publish.sh ${nextRelease.version} ${branch.name} ${commits.length} ${Date.now()}"
       }
     ]
@@ -68,7 +74,14 @@ With this example:
 | `shell`               | The shell to use to run the command. See [execa#shell](https://github.com/sindresorhus/execa#shell).                                                                                                                                                                                                                                     |
 | `execCwd`             | The path to use as current working directory when executing the shell commands. This path is relative to the path from which **semantic-release** is running. For example if **semantic-release** runs from `/my-project` and `execCwd` is set to `buildScripts` then the shell command will be executed from `/my-project/buildScripts` |
 
-Each shell command is generated with [Lodash template](https://lodash.com/docs#template). All the [`context` object keys](https://github.com/semantic-release/semantic-release/blob/master/docs/developer-guide/plugin.md#context) passed to semantic-release plugins are available as template options.
+Each shell command can be a string or an object with the following properties:
+
+| Property | Description                                           |
+| -------- | ----------------------------------------------------- |
+| `cmd`    | The shell command to execute.                         |
+| `env`    | An object to pass as additional environment variables |
+
+Each shell command and environment variable value are generated with [Lodash template](https://lodash.com/docs#template). All the [`context` object keys](https://github.com/semantic-release/semantic-release/blob/master/docs/developer-guide/plugin.md#context) passed to semantic-release plugins are available as template options.
 
 ## verifyConditionsCmd
 
