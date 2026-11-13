@@ -28,7 +28,7 @@
     "stream-buffers": "3.0.3"
   },
   "engines": {
-    "node": "^22.22.2 || >=24.15"
+    "node": ">=26.13"
   },
   "files": [
     "lib",
