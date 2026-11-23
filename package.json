@@ -48,7 +48,7 @@
   "exports": "./index.js",
   "main": "index.js",
   "peerDependencies": {
-    "semantic-release": ">=24.1.0"
+    "@semantic-release/core": ">=1.0.0"
   },
   "publishConfig": {
     "access": "public",
